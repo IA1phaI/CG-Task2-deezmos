@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 
+/** Deezmos controller for GUI. */
 public class DeezmosController {
 
   @FXML private ResourceBundle resources;
