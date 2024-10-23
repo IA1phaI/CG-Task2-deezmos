@@ -3,7 +3,7 @@ package ru.vsu.cs.course2.deezmos.abstractsyntaxtree;
 /**
  * NodeNumber
  */
-public class NodeNumber implements ASTNodeI {
+public class NodeNumber extends ASTNode {
 
   private double value;
 

@@ -3,17 +3,16 @@ package ru.vsu.cs.course2.deezmos.abstractsyntaxtree;
 /**
  * NodeOperator
  */
-public abstract class NodeOperator implements ASTNodeI {
+public abstract class NodeOperator extends ASTNode implements Computable {
   private Double value;
 
   @Override
   public double getValue() {
-    if (this.value != null) {
-      return this.value;
+    if (value == null) {
+      value = compute();
     }
 
-    return compute();
+    return value;
   }
 
-  abstract double compute();
 }

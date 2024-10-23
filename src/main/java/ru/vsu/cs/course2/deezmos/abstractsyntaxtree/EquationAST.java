@@ -10,13 +10,13 @@ import ru.vsu.cs.course2.deezmos.EquationTokenizer.Token;
  */
 public class EquationAST {
 
-  private ASTNodeI head;
+  private ASTNode head;
 
-  public EquationAST(ASTNodeI head) {
+  public EquationAST(ASTNode head) {
     this.head = head;
   }
 
-  public ASTNodeI getHead() {
+  public ASTNode getHead() {
     return head;
   }
 
