@@ -2,10 +2,9 @@ package ru.vsu.cs.course2.deezmos;
 
 /** Tokens of equation. */
 enum TokenType {
+  SPACE,
   NUMBER,
-  X,
-  Y,
-  PARAM,
+  IDENT,
   L_PARENT,
   R_PARENT,
   COMMA,
@@ -13,18 +12,5 @@ enum TokenType {
   MINUS,
   MULT,
   POW,
-  DIVISION,
-  LN,
-  LG,
-  LOG,
-  SIN,
-  COS,
-  TG,
-  CTG,
-  ASIN,
-  ACOS,
-  ATG,
-  ACTG,
-  PI,
-  E;
+  DIVISION;
 }

@@ -1,57 +1,79 @@
 package ru.vsu.cs.course2.deezmos;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** EquationTokenizer. */
 public class EquationTokenizer {
 
-  private final ArrayList<Pattern> patterns;
-
-  private static final Pattern numberPattern = Pattern.compile("^-?\\d+(?:\\.\\d+)?");
-  private static final Pattern varPattern = Pattern.compile("[a-zA-Z]+");
-  private static final Pattern spacePattern = Pattern.compile("\\s+");
-
-  public EquationTokenizer(Set<String> simpleTokens) {
-    patterns = new ArrayList<>();
-    for (String token : simpleTokens) {
-      patterns.add(Pattern.compile("^" + token));
-      patterns.add(numberPattern);
-      patterns.add(varPattern);
-      patterns.add(spacePattern);
-    }
+  /** Token. */
+  public record Token(String value, TokenType type) {
   }
 
-  public ArrayList<String> tokenize(String string) {
-    string = string.toLowerCase();
-    ArrayList<String> tokensList = new ArrayList<>();
-    int cursor = 0;
+  /**
+   * TokenPattern.
+   */
+  public record TokenPattern(Pattern pattern, TokenType type) {
+  }
 
-    while (cursor < string.length()) {
-      String substring = string.substring(cursor);
-      for (Pattern pattern : patterns) {
-        Matcher matcher = pattern.matcher(substring);
+  private LinkedList<Token> tokens;
+  private int cursor;
+  private String string;
 
-        if (matcher.find()) {
-          String token = substring.substring(matcher.start(), matcher.end());
-          tokensList.add(token);
+  private static final LinkedList<TokenPattern> tokenPatterns;
 
-          if (token.charAt(0) != ' ') {
-            cursor += token.length();
-          }
-          break;
-        }
+  public EquationTokenizer() {
+    this.tokens = new LinkedList<>();
+    this.cursor = 0;
+  }
 
+  public void setData(String string) {
+    this.string = string;
+  }
+
+  static {
+    tokenPatterns = new LinkedList<>(
+        List.of(
+            new TokenPattern(Pattern.compile("^\\s+"), TokenType.SPACE),
+            new TokenPattern(Pattern.compile("^-?\\d+(?:\\.\\d+)?"), TokenType.NUMBER),
+            new TokenPattern(Pattern.compile("^[a-zA-Z]+"), TokenType.IDENT),
+            new TokenPattern(Pattern.compile("^\\("), TokenType.L_PARENT),
+            new TokenPattern(Pattern.compile("^\\)"), TokenType.R_PARENT),
+            new TokenPattern(Pattern.compile("^,"), TokenType.COMMA),
+            new TokenPattern(Pattern.compile("^\\+"), TokenType.PLUS),
+            new TokenPattern(Pattern.compile("^\\-"), TokenType.MINUS),
+            new TokenPattern(Pattern.compile("^\\*"), TokenType.MULT),
+            new TokenPattern(Pattern.compile("^\\^"), TokenType.POW),
+            new TokenPattern(Pattern.compile("^\\/"), TokenType.DIVISION)));
+  }
+
+  public Token next() throws IOException, RuntimeException {
+    if (this.cursor == this.string.length()) {
+      throw new RuntimeException("Reached EOL");
+    }
+
+    String substr = this.string.substring(cursor, string.length());
+    Matcher matcher;
+
+    for (TokenPattern tokenPattern : tokenPatterns) {
+      matcher = tokenPattern.pattern().matcher(substr);
+
+      if (!matcher.find()) {
+        continue;
       }
-      
+
+      this.cursor += matcher.end();
+
+      if (tokenPattern.type() == TokenType.SPACE) {
+        return this.next();
+      }
+
+      return new Token(substr.substring(matcher.start(), matcher.end()), tokenPattern.type());
     }
 
-    if (cursor != string.length() - 1) {
-      System.out.println("err");
-    }
-    return tokensList;
+    throw new IOException(String.format("Tokenization error: What the sigma is %s", substr));
   }
 }

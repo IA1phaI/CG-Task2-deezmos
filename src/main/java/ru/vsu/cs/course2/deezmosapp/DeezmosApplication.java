@@ -34,36 +34,15 @@ public class DeezmosApplication extends Application {
     stage.show();
   }
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException, RuntimeException {
 
-    HashMap<String, TokenType> simpleTokensMap =
-        new HashMap<>(
-            Map.ofEntries(
-                // Map.entry("^-?\\d+(?:\\.\\d+)?", TokenType.NUMBER),
-                Map.entry("x", TokenType.X),
-                Map.entry("y", TokenType.Y),
-                Map.entry("(", TokenType.L_PARENT),
-                Map.entry(")", TokenType.R_PARENT),
-                Map.entry(",", TokenType.COMMA),
-                Map.entry("+", TokenType.PLUS),
-                Map.entry("-", TokenType.MINUS),
-                Map.entry("*", TokenType.MULT),
-                Map.entry("^", TokenType.POW),
-                Map.entry("/", TokenType.DIVISION),
-                Map.entry("ln", TokenType.LN),
-                Map.entry("lg", TokenType.LG),
-                Map.entry("log", TokenType.LOG),
-                Map.entry("sin", TokenType.SIN),
-                Map.entry("cos", TokenType.COS),
-                Map.entry("tg", TokenType.TG),
-                Map.entry("ctg", TokenType.CTG),
-                Map.entry("asin", TokenType.ASIN),
-                Map.entry("acos", TokenType.ACOS),
-                Map.entry("atg", TokenType.ATG),
-                Map.entry("actg", TokenType.ACTG)));
+    EquationTokenizer tokenizer = new EquationTokenizer();
+    tokenizer.setData("+--45 +*");
+    while (true) {
+      //tokenizer.next().value();
+      System.out.println(tokenizer.next().value());
+    }
 
-    EquationTokenizer tokenizer = new EquationTokenizer(simpleTokensMap.keySet());
-    System.out.println(tokenizer.tokenize("++-1 + 2 + 3"));
-    launch();
+    // launch();
   }
 }
