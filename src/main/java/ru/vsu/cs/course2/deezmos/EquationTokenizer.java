@@ -39,7 +39,6 @@ public class EquationTokenizer {
         List.of(
             new TokenPattern(Pattern.compile("^\\s+"), TokenType.SPACE),
             new TokenPattern(Pattern.compile("^-?\\d+(?:\\.\\d+)?"), TokenType.NUMBER),
-            new TokenPattern(Pattern.compile("^[a-zA-Z]+"), TokenType.IDENT),
             new TokenPattern(Pattern.compile("^\\("), TokenType.L_PARENT),
             new TokenPattern(Pattern.compile("^\\)"), TokenType.R_PARENT),
             new TokenPattern(Pattern.compile("^,"), TokenType.COMMA),
@@ -47,7 +46,8 @@ public class EquationTokenizer {
             new TokenPattern(Pattern.compile("^\\-"), TokenType.MINUS),
             new TokenPattern(Pattern.compile("^\\*"), TokenType.MULT),
             new TokenPattern(Pattern.compile("^\\^"), TokenType.POW),
-            new TokenPattern(Pattern.compile("^\\/"), TokenType.DIVISION)));
+            new TokenPattern(Pattern.compile("^\\/"), TokenType.DIVISION),
+            new TokenPattern(Pattern.compile("^[a-zA-Z]+"), TokenType.VAR)));
   }
 
   public Token next() throws IOException, RuntimeException {
