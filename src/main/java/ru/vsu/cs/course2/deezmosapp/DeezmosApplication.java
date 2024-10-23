@@ -1,10 +1,13 @@
 package ru.vsu.cs.course2.deezmosapp;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ru.vsu.cs.course2.deezmos.EquationTokenizer;
 
 /** JavaFX DeezMos GUI. */
 public class DeezmosApplication extends Application {
@@ -32,6 +35,35 @@ public class DeezmosApplication extends Application {
   }
 
   public static void main(String[] args) {
+
+    HashMap<String, TokenType> simpleTokensMap =
+        new HashMap<>(
+            Map.ofEntries(
+                // Map.entry("^-?\\d+(?:\\.\\d+)?", TokenType.NUMBER),
+                Map.entry("x", TokenType.X),
+                Map.entry("y", TokenType.Y),
+                Map.entry("(", TokenType.L_PARENT),
+                Map.entry(")", TokenType.R_PARENT),
+                Map.entry(",", TokenType.COMMA),
+                Map.entry("+", TokenType.PLUS),
+                Map.entry("-", TokenType.MINUS),
+                Map.entry("*", TokenType.MULT),
+                Map.entry("^", TokenType.POW),
+                Map.entry("/", TokenType.DIVISION),
+                Map.entry("ln", TokenType.LN),
+                Map.entry("lg", TokenType.LG),
+                Map.entry("log", TokenType.LOG),
+                Map.entry("sin", TokenType.SIN),
+                Map.entry("cos", TokenType.COS),
+                Map.entry("tg", TokenType.TG),
+                Map.entry("ctg", TokenType.CTG),
+                Map.entry("asin", TokenType.ASIN),
+                Map.entry("acos", TokenType.ACOS),
+                Map.entry("atg", TokenType.ATG),
+                Map.entry("actg", TokenType.ACTG)));
+
+    EquationTokenizer tokenizer = new EquationTokenizer(simpleTokensMap.keySet());
+    System.out.println(tokenizer.tokenize("++-1 + 2 + 3"));
     launch();
   }
 }
