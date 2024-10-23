@@ -4,7 +4,7 @@ package ru.vsu.cs.course2.deezmos;
 public enum TokenType {
   SPACE,
   NUMBER,
-  IDENT,
+  VAR,
   L_PARENT,
   R_PARENT,
   COMMA,
