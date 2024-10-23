@@ -8,12 +8,16 @@ import javafx.scene.canvas.Canvas;
 /** Deezmos controller for GUI. */
 public class DeezmosController {
 
-  @FXML private ResourceBundle resources;
-
-  @FXML private URL location;
-
-  @FXML private Canvas canvas;
+  @FXML
+  private ResourceBundle resources;
 
   @FXML
-  void initialize() {}
+  private URL location;
+
+  @FXML
+  private Canvas canvas;
+
+  @FXML
+  void initialize() {
+  }
 }
