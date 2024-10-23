@@ -1,7 +1,7 @@
 package ru.vsu.cs.course2.deezmos;
 
 /** Tokens of equation. */
-enum TokenType {
+public enum TokenType {
   SPACE,
   NUMBER,
   IDENT,
