@@ -25,7 +25,7 @@ public class DeezmosApplication extends Application {
   public static void main(String[] args) throws IOException, RuntimeException {
 
     EquationTokenizer tokenizer = new EquationTokenizer();
-    tokenizer.setData("+--45 +*");
+    tokenizer.setData("25 + x - 34 * (25- 12)/cos-a^56");
     while (true) {
       // tokenizer.next().value();
       System.out.println(tokenizer.next().value());
