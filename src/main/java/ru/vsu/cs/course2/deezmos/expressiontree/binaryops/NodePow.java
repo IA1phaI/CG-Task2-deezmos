@@ -1,6 +1,6 @@
 package ru.vsu.cs.course2.deezmos.abstractsyntaxtree.binaryops;
 
-import ru.vsu.cs.course2.deezmos.expressiontree.ETreeNode;
+import ru.vsu.cs.course2.deezmos.expressiontree.ETNode;
 import ru.vsu.cs.course2.deezmos.expressiontree.NodeBinaryOperator;
 
 /**
@@ -8,7 +8,7 @@ import ru.vsu.cs.course2.deezmos.expressiontree.NodeBinaryOperator;
  */
 public class NodePow extends NodeBinaryOperator {
 
-  public NodePow(ETreeNode argument, ETreeNode pow) {
+  public NodePow(ETNode argument, ETNode pow) {
     super(argument, pow);
   }
 

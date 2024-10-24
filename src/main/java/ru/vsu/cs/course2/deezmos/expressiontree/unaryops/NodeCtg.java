@@ -1,6 +1,6 @@
 package ru.vsu.cs.course2.deezmos.abstractsyntaxtree.unaryops;
 
-import ru.vsu.cs.course2.deezmos.expressiontree.ETreeNode;
+import ru.vsu.cs.course2.deezmos.expressiontree.ETNode;
 import ru.vsu.cs.course2.deezmos.expressiontree.NodeUnaryOperator;
 
 /**
@@ -8,7 +8,7 @@ import ru.vsu.cs.course2.deezmos.expressiontree.NodeUnaryOperator;
  */
 public class NodeCtg extends NodeUnaryOperator {
 
-  public NodeCtg(ETreeNode argument) {
+  public NodeCtg(ETNode argument) {
     super(argument);
   }
 

@@ -1,5 +1,6 @@
 package ru.vsu.cs.course2.deezmos.expressiontree.unaryops;
 
+import ru.vsu.cs.course2.deezmos.expressiontree.ETNode;
 import ru.vsu.cs.course2.deezmos.expressiontree.NodeUnaryOperator;
 
 /**
@@ -7,8 +8,8 @@ import ru.vsu.cs.course2.deezmos.expressiontree.NodeUnaryOperator;
  */
 public class NodeParentheses extends NodeUnaryOperator {
 
-  public NodeParentheses() {
-    super();
+  public NodeParentheses(ETNode child) {
+    super(child);
   }
 
   @Override

@@ -3,28 +3,28 @@ package ru.vsu.cs.course2.deezmos.expressiontree;
 /**
  * NodeOperator
  */
-public abstract class NodeUnaryOperator implements ETreeNode {
+public abstract class NodeUnaryOperator implements ETNode {
 
-  private ETreeNode argument;
+  private ETNode argument;
 
-  public ETreeNode(ETreeNode left) {
-    this.argument = left;
+  public NodeUnaryOperator(ETNode child) {
+    this.argument = child;
   }
 
-  public ETreeNode() {
+  public NodeUnaryOperator() {
     this(null);
   }
 
-  public ETreeNode getArgument() {
+  public ETNode getArgument() {
     return argument;
   }
 
-  public void setArgument(ETreeNode left) {
-    this.argument = left;
+  public void setArgument(ETNode child) {
+    this.argument = child;
   }
 
   @Override
-  public void pushChild(ETreeNode child) {
+  public void pushChild(ETNode child) {
     setArgument(child);
   }
 }

@@ -3,33 +3,33 @@ package ru.vsu.cs.course2.deezmos.expressiontree;
 /**
  * NodeOperator
  */
-public abstract class NodeBinaryOperator implements ETreeNode {
+public abstract class NodeBinaryOperator implements ETNode {
 
-  private ETreeNode left;
-  private ETreeNode right;
+  private ETNode left;
+  private ETNode right;
 
-  public ETreeNode(ETreeNode left, ETreeNode right) {
+  public NodeBinaryOperator(ETNode left, ETNode right) {
     this.left = left;
     this.right = right;
   }
 
-  public ETreeNode() {
+  public NodeBinaryOperator() {
     this(null, null);
   }
 
-  public ETreeNode getLeft() {
+  public ETNode getLeft() {
     return left;
   }
 
-  public ETreeNode getRight() {
+  public ETNode getRight() {
     return right;
   }
 
-  public void setLeft(ETreeNode left) {
+  public void setLeft(ETNode left) {
     this.left = left;
   }
 
-  public void setRight(ETreeNode right) {
+  public void setRight(ETNode right) {
     this.right = right;
   }
 
@@ -42,7 +42,7 @@ public abstract class NodeBinaryOperator implements ETreeNode {
   }
 
   @Override
-  public void pushChild(ETreeNode child) {
+  public void pushChild(ETNode child) {
     if (!this.hasLeft()) {
       this.setLeft(child);
       return;
