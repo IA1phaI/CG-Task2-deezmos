@@ -3,47 +3,23 @@ package ru.vsu.cs.course2.deezmos.expressiontree;
 /**
  * NodeNumber
  */
-public class NodeNumber implements ETreeNode {
-
-  private double value;
+public class NodeNumber extends ETreeNode {
 
   public NodeNumber(double value) {
-    this.value = value;
+    super(null, null, value);
+  }
+
+  public NodeNumber() {
+    super();
   }
 
   @Override
-  public ETreeNode getLeft() {
-    return null;
+  public void setLeft(ETreeNode left) {
+    throw new RuntimeException("NodeNumber cannot have child");
   }
 
   @Override
-  public ETreeNode getRight() {
-    return null;
+  public void setRight(ETreeNode right) {
+    throw new RuntimeException("NodeNumber cannot have child");
   }
-
-  @Override
-  public double getValue() {
-    return value;
-  }
-
-  @Override
-  public boolean hasLeft() {
-    return false;
-  }
-
-  @Override
-  public boolean hasRight() {
-    return false;
-  }
-
-  @Override
-  public void setLeft(ETreeNode left) throws RuntimeException {
-    throw new RuntimeException("No child nodes in NodeNumber");
-  }
-
-  @Override
-  public void setRight(ETreeNode right) throws RuntimeException {
-    throw new RuntimeException("No child nodes in NodeNumber");
-  }
-
 }

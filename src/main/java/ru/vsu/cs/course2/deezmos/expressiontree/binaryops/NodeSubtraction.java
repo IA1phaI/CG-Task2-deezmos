@@ -1,19 +1,19 @@
 package ru.vsu.cs.course2.deezmos.abstractsyntaxtree.binaryops;
 
-import ru.vsu.cs.course2.deezmos.abstractsyntaxtree.ASTNode;
-import ru.vsu.cs.course2.deezmos.abstractsyntaxtree.NodeBinaryOperator;
+import ru.vsu.cs.course2.deezmos.expressiontree.ETreeNode;
+import ru.vsu.cs.course2.deezmos.expressiontree.NodeBinaryOperator;
 
 /**
  * NodeSubtraction
  */
 public class NodeSubtraction extends NodeBinaryOperator {
 
-  public NodeSubtraction(ASTNode left, ASTNode right) {
+  public NodeSubtraction(ETreeNode left, ETreeNode right) {
     super(left, right);
   }
 
   @Override
-  public double compute() {
+  public double getValue() {
     return getLeft().getValue() - getRight().getValue();
   }
 

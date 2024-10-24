@@ -1,19 +1,19 @@
 package ru.vsu.cs.course2.deezmos.abstractsyntaxtree.binaryops;
 
-import ru.vsu.cs.course2.deezmos.abstractsyntaxtree.ASTNode;
-import ru.vsu.cs.course2.deezmos.abstractsyntaxtree.NodeBinaryOperator;
+import ru.vsu.cs.course2.deezmos.expressiontree.ETreeNode;
+import ru.vsu.cs.course2.deezmos.expressiontree.NodeBinaryOperator;
 
 /**
  * NodeDivision
  */
 public class NodeDivision extends NodeBinaryOperator {
 
-  public NodeDivision(ASTNode left, ASTNode right) {
+  public NodeDivision(ETreeNode left, ETreeNode right) {
     super(left, right);
   }
 
   @Override
-  public double compute() {
+  public double getValue() {
     return getLeft().getValue() / getRight().getValue();
   }
 

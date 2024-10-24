@@ -6,6 +6,7 @@ import java.util.Stack;
 import ru.vsu.cs.course2.deezmos.ExpressionTokenizer;
 import ru.vsu.cs.course2.deezmos.TokenType;
 import ru.vsu.cs.course2.deezmos.ExpressionTokenizer.Token;
+import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.NodeParentheses;
 
 /**
  * EpressionTree
@@ -27,35 +28,35 @@ public class ExpressionTree {
       tokens.add(tokenizer.next());
     }
 
-    Stack<ETreeNode> operandStack = new Stack<>();
+    Stack<ETreeNode> stack = new Stack<>();
     ETreeNode currentNode = new ETreeNode();
-      
+
     for (Token token : tokens) {
       switch (token.type()) {
         case L_PAREN -> {
-          ETreeNode childNode = new ETreeNode();
-          currentNode.setLeft(left);
+          ETreeNode child = new NodeParentheses();
+          stack.push(currentNode);
+          currentNode = childNode;
+        }
+        case NUMBER -> {
+          ETreeNode child = new NodeNumber(token.value());
+          currentNode.pushChild(child);
+          currentNode = stack.pop();
+        }
+        case WORD -> {
+          ETreeNode child = recognizeOperator
         }
         case R_PAREN -> {
-          while (condition) {
-            
-          }
-          
+          currentNode = stack.pop();
         }
-          
-          break;
-
-        default:
-          break
       }
     }
-
   }
 
-  private popOperator(Stack<NodeOperator> operatorStack, Stack<ETreeNode> operandStack) {
+  private void popOperator(Stack<NodeBinaryOperator> operatorStack, Stack<ETreeNode> operandStack) {
     ETreeNode node = operatorStack.pop();
     node.setRight(operandStack.pop());
-    node.setLeft(operandStack.pop());
+    node.setArgument(operandStack.pop());
     operandStack.push(node);
   }
 

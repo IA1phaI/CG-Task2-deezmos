@@ -7,11 +7,5 @@ public interface ETreeNode {
 
   double getValue();
 
-  ETreeNode getLeft();
-  void setLeft(ETreeNode left);
-  boolean hasLeft();
-
-  ETreeNode getRight();
-  void setRight(ETreeNode right);
-  boolean hasRight();
+  void pushChild(ETreeNode child);
 }

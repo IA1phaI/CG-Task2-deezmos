@@ -1,19 +1,19 @@
 package ru.vsu.cs.course2.deezmos.abstractsyntaxtree.unaryops;
 
-import ru.vsu.cs.course2.deezmos.abstractsyntaxtree.ASTNode;
-import ru.vsu.cs.course2.deezmos.abstractsyntaxtree.NodeUnaryOperator;
+import ru.vsu.cs.course2.deezmos.expressiontree.ETreeNode;
+import ru.vsu.cs.course2.deezmos.expressiontree.NodeUnaryOperator;
 
 /**
  * NodeAtg
  */
 public class NodeAtg extends NodeUnaryOperator {
 
-  public NodeAtg(ASTNode argument) {
+  public NodeAtg(ETreeNode argument) {
     super(argument);
   }
 
   @Override
-  public double compute() {
+  public double getValue() {
     return Math.atan(this.getArgument().getValue());
   }
 
