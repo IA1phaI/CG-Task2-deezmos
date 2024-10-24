@@ -4,13 +4,15 @@ package ru.vsu.cs.course2.deezmos;
 public enum TokenType {
   SPACE,
   NUMBER,
-  VAR,
-  L_PARENT,
-  R_PARENT,
+  WORD,
+  L_PAREN,
+  R_PAREN,
+  LINE,
   COMMA,
   PLUS,
   MINUS,
   MULT,
   POW,
-  DIVISION;
+  DIVISION,
+  EOL;
 }

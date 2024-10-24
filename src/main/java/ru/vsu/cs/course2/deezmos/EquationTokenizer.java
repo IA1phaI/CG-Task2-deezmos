@@ -39,20 +39,21 @@ public class EquationTokenizer {
         List.of(
             new TokenPattern(Pattern.compile("^\\s+"), TokenType.SPACE),
             new TokenPattern(Pattern.compile("^-?\\d+(?:\\.\\d+)?"), TokenType.NUMBER),
-            new TokenPattern(Pattern.compile("^\\("), TokenType.L_PARENT),
-            new TokenPattern(Pattern.compile("^\\)"), TokenType.R_PARENT),
+            new TokenPattern(Pattern.compile("^\\("), TokenType.L_PAREN),
+            new TokenPattern(Pattern.compile("^\\)"), TokenType.R_PAREN),
+            new TokenPattern(Pattern.compile("^\\|"), TokenType.LINE),
             new TokenPattern(Pattern.compile("^,"), TokenType.COMMA),
             new TokenPattern(Pattern.compile("^\\+"), TokenType.PLUS),
             new TokenPattern(Pattern.compile("^\\-"), TokenType.MINUS),
             new TokenPattern(Pattern.compile("^\\*"), TokenType.MULT),
             new TokenPattern(Pattern.compile("^\\^"), TokenType.POW),
             new TokenPattern(Pattern.compile("^\\/"), TokenType.DIVISION),
-            new TokenPattern(Pattern.compile("^[a-zA-Z]+"), TokenType.VAR)));
+            new TokenPattern(Pattern.compile("^[a-zA-Z]+"), TokenType.WORD)));
   }
 
-  public Token next() throws IOException, RuntimeException {
+  public Token next() throws IOException {
     if (this.cursor == this.string.length()) {
-      throw new RuntimeException("Reached EOL");
+      return new Token("<EOL>", TokenType.EOL);
     }
 
     String substr = this.string.substring(cursor, string.length());
