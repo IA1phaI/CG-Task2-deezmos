@@ -12,6 +12,10 @@ public class NodeParentheses extends NodeUnaryOperator {
     super(child);
   }
 
+  public NodeParentheses() {
+    super();
+  }
+
   @Override
   public double getValue() {
     return getArgument().getValue();

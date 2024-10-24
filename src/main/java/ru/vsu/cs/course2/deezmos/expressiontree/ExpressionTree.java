@@ -1,12 +1,14 @@
 package ru.vsu.cs.course2.deezmos.expressiontree;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Stack;
 
 import ru.vsu.cs.course2.deezmos.ExpressionTokenizer;
-import ru.vsu.cs.course2.deezmos.TokenType;
 import ru.vsu.cs.course2.deezmos.ExpressionTokenizer.Token;
+import ru.vsu.cs.course2.deezmos.TokenType;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.NodeCos;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.NodeParentheses;
 
@@ -17,14 +19,15 @@ public class ExpressionTree {
 
   private HashMap<String, Double> paramValues;
 
-  private ETreeNode root;
+  private ETNode root;
   private String expession;
+  List<Token> tokens;
 
-  public ExpressionTree(String expression) {
-    this.expession = expession;
+  public ExpressionTree(String expression) throws IOException {
+    tokens = tokenize(expression);
   }
 
-  public void parse() {
+  public List<Token> tokenize(String expression) throws IOException {
     ExpressionTokenizer tokenizer = new ExpressionTokenizer();
     tokenizer.setData(expession);
     LinkedList<Token> tokens = new LinkedList<>();
@@ -32,8 +35,13 @@ public class ExpressionTree {
       tokens.add(tokenizer.next());
     }
 
+    return tokens;
+  }
+
+  public void parse() {
+
     Stack<ETNode> stack = new Stack<>();
-    ETNode currentNode = new ETreeNode();
+    ETNode currentNode = new NodeParentheses();
 
     for (Token token : tokens) {
       if (token.type() == TokenType.L_PAREN) {
@@ -41,7 +49,7 @@ public class ExpressionTree {
         stack.push(currentNode);
         currentNode = child;
       } else if (token.type() == TokenType.NUMBER) {
-        ETNode child = new NodeNumber(token.value());
+        ETNode child = new NodeNumber(Double.parseDouble(token.value()));
         currentNode.pushChild(child);
         currentNode = stack.pop();
       } else if (token.type() == TokenType.PARAM) {
@@ -62,7 +70,6 @@ public class ExpressionTree {
   }
 
   public ETNode recognizeOperator(TokenType tokenType) {
-    NodeCos node = new NNo
-    return new Nod;
+    return new NodeCos();
   }
 }

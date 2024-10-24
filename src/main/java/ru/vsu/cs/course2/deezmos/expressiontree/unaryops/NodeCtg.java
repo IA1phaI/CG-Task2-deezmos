@@ -1,4 +1,4 @@
-package ru.vsu.cs.course2.deezmos.abstractsyntaxtree.unaryops;
+package ru.vsu.cs.course2.deezmos.expressiontree.unaryops;
 
 import ru.vsu.cs.course2.deezmos.expressiontree.ETNode;
 import ru.vsu.cs.course2.deezmos.expressiontree.NodeUnaryOperator;
