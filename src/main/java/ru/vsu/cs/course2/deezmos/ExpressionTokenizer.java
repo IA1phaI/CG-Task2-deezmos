@@ -31,7 +31,7 @@ public class ExpressionTokenizer {
   }
 
   public void setData(String string) {
-    this.string = string;
+    this.string = string.toLowerCase();
   }
 
   static {
@@ -48,7 +48,20 @@ public class ExpressionTokenizer {
             new TokenPattern(Pattern.compile("^\\*"), TokenType.MULT),
             new TokenPattern(Pattern.compile("^\\^"), TokenType.POW),
             new TokenPattern(Pattern.compile("^\\/"), TokenType.DIVISION),
-            new TokenPattern(Pattern.compile("^[a-zA-Z]+"), TokenType.WORD)));
+            new TokenPattern(Pattern.compile("^log"), TokenType.LOG),
+            new TokenPattern(Pattern.compile("^abs"), TokenType.ABS),
+            new TokenPattern(Pattern.compile("^sin"), TokenType.SIN),
+            new TokenPattern(Pattern.compile("^cos"), TokenType.COS),
+            new TokenPattern(Pattern.compile("^tg"), TokenType.TG),
+            new TokenPattern(Pattern.compile("^ctg"), TokenType.CTG),
+            new TokenPattern(Pattern.compile("^asin"), TokenType.ASIN),
+            new TokenPattern(Pattern.compile("^acos"), TokenType.ACOS),
+            new TokenPattern(Pattern.compile("^atg"), TokenType.ATG),
+            new TokenPattern(Pattern.compile("^actg"), TokenType.ACTG),
+            new TokenPattern(Pattern.compile("^ln"), TokenType.LN),
+            new TokenPattern(Pattern.compile("^lg"), TokenType.LG),
+            new TokenPattern(Pattern.compile("^x"), TokenType.X),
+            new TokenPattern(Pattern.compile("^[a-zA-Z]+"), TokenType.PARAM)));
   }
 
   public Token next() throws IOException {
@@ -68,7 +81,7 @@ public class ExpressionTokenizer {
 
       this.cursor += matcher.end();
 
-      if (tokenPattern.type() == TokenType.SPACE) {
+      if (tokenPattern.type() == TokenType.SPACE || tokenPattern.type() == TokenType.COMMA) {
         return this.next();
       }
 
