@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** EquationTokenizer. */
-public class EquationTokenizer {
+public class ExpressionTokenizer {
 
   /** Token. */
   public record Token(String value, TokenType type) {
@@ -25,7 +25,7 @@ public class EquationTokenizer {
 
   private static final LinkedList<TokenPattern> tokenPatterns;
 
-  public EquationTokenizer() {
+  public ExpressionTokenizer() {
     this.tokens = new LinkedList<>();
     this.cursor = 0;
   }
@@ -52,7 +52,7 @@ public class EquationTokenizer {
   }
 
   public Token next() throws IOException {
-    if (this.cursor == this.string.length()) {
+    if (!this.hasNext()) {
       return new Token("<EOL>", TokenType.EOL);
     }
 
@@ -76,5 +76,9 @@ public class EquationTokenizer {
     }
 
     throw new IOException(String.format("Tokenization error: What the sigma is %s", substr));
+  }
+
+  public boolean hasNext() {
+    return this.cursor != this.string.length();
   }
 }

@@ -7,7 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import ru.vsu.cs.course2.deezmos.EquationTokenizer;
+import ru.vsu.cs.course2.deezmos.ExpressionTokenizer;
 
 /** JavaFX DeezMos GUI. */
 public class DeezmosApplication extends Application {
@@ -24,7 +24,7 @@ public class DeezmosApplication extends Application {
 
   public static void main(String[] args) throws IOException, RuntimeException {
 
-    EquationTokenizer tokenizer = new EquationTokenizer();
+    ExpressionTokenizer tokenizer = new ExpressionTokenizer();
     tokenizer.setData("25 + x - 34 * (25- 12)/cos-a^56");
     while (true) {
       // tokenizer.next().value();

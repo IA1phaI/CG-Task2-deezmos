@@ -2,14 +2,14 @@ package ru.vsu.cs.course2.deezmos;
 
 import java.io.IOException;
 
-import ru.vsu.cs.course2.deezmos.EquationTokenizer.Token;
+import ru.vsu.cs.course2.deezmos.ExpressionTokenizer.Token;
 
 /** EquationParser. */
 public class EquationParser {
-  private EquationTokenizer tokenizer;
+  private ExpressionTokenizer tokenizer;
   private Token currentToken;
 
-  public EquationParser(EquationTokenizer tokenizer) {
+  public EquationParser(ExpressionTokenizer tokenizer) {
     this.tokenizer = tokenizer;
   }
 
