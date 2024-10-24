@@ -22,14 +22,6 @@ public class EquationAST {
 
   public void parse(List<Token> tokens, HashMap<String, Double> params) {
     for (Token token : tokens) {
-      switch (token.type()) {
-        case TokenType:
-          
-          break;
-
-        default:
-          break;
-      }
     }
   }
 }

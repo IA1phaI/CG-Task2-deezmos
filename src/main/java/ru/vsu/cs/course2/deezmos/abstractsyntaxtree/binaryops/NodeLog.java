@@ -1,5 +1,6 @@
 package ru.vsu.cs.course2.deezmos.abstractsyntaxtree.binaryops;
 
+import ru.vsu.cs.course2.deezmos.abstractsyntaxtree.ASTNode;
 import ru.vsu.cs.course2.deezmos.abstractsyntaxtree.NodeBinaryOperator;
 
 /**
@@ -7,9 +8,13 @@ import ru.vsu.cs.course2.deezmos.abstractsyntaxtree.NodeBinaryOperator;
  */
 public class NodeLog extends NodeBinaryOperator {
 
+  public NodeLog(ASTNode argument, ASTNode base) {
+    super(argument, base);
+  }
+
   @Override
   public double compute() {
-    return Math.log(getRight().getValue()) / Math.log(getLeft()getValue());
+    return Math.log(getRight().getValue()) / Math.log(getLeft().getValue());
   }
 
 }
