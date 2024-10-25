@@ -10,6 +10,8 @@ import java.util.Stack;
 import ru.vsu.cs.course2.deezmos.ExpressionTokenizer;
 import ru.vsu.cs.course2.deezmos.ExpressionTokenizer.Token;
 import ru.vsu.cs.course2.deezmos.TokenType;
+import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncAdd;
+import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncNumber;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.NodeCos;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.NodeParentheses;
 
@@ -46,23 +48,24 @@ public class ExpressionTree {
   public void parse() {
 
     Stack<ETNode> stack = new Stack<>();
-    Stack<NodeParentheses> parenStack = new Stack<>();
-    ETNode currentNode = new NodeParentheses();
+    root = new ETNode();
+    stack.push(root);
+    ETNode currentNode = root;
 
     for (Token token : tokens) {
       if (token.type() == TokenType.L_PAREN) {
-        NodeParentheses paren = new NodeParentheses();
+        ETNode newNode = new ETNode();
+        currentNode.setLeft(newNode);
         stack.push(currentNode);
-        parenStack.push(paren);
-        currentNode = paren;
+        currentNode = newNode;
+
       } else if (token.type() == TokenType.NUMBER) {
-        ETNode child = new NodeNumber(Double.parseDouble(token.value()));
-        currentNode.pushChild(child);
+        currentNode.setEvaluator(new FuncNumber(Double.parseDouble(token.value())));
         currentNode = stack.pop();
       } else if (token.type() == TokenType.PARAM) {
-        ETNode child = new NodeNumber(paramValues.get(token.value()));
-        stack.push(currentNode);
-        currentNode = child;
+        currentNode.setEvaluator(new FuncNumber(paramValues.get(token.value()));
+        currentNode = stack.pop();
+        Evaluator ev = new FuncAdd();
       } else if (token.type() == TokenType.R_PAREN) {
         currentNode = stack.pop();
       }
