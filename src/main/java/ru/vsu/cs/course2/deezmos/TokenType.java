@@ -32,12 +32,4 @@ public enum TokenType {
   LN,
   LG,
   EOL;
-
-  public HashSet<TokenType> getUnaryOperators() {
-    return new HashSet<>(Set.of(ABS, SIN, COS, TG, CTG, ASIN, ACOS, ATG, ACTG, LN, LG));
-  }
-
-  public HashSet<TokenType> getBynaryOperators() {
-    return new HashSet<>(Set.of(PLUS, MINUS, MULT, DIVISION, POW, LOG));
-  }
 }
