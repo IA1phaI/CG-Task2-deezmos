@@ -1,20 +1,16 @@
 package ru.vsu.cs.course2.deezmos.expressiontree.unaryops;
 
 import ru.vsu.cs.course2.deezmos.expressiontree.ETNode;
+import ru.vsu.cs.course2.deezmos.expressiontree.Evaluator;
 import ru.vsu.cs.course2.deezmos.expressiontree.NodeUnaryOperator;
 
 /**
- * NodeSin
+ * FuncTg
  */
-public class NodeSin extends NodeUnaryOperator {
-
-  public NodeSin(ETNode argument) {
-    super(argument);
-  }
+public class FuncTg implements Evaluator {
 
   @Override
-  public double getValue() {
-    return Math.sin(this.getArgument().getValue());
+  public double evaluate(ETNode left, ETNode right) {
+    return Math.tan(left.evaluate());
   }
-
 }

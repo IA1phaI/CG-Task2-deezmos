@@ -12,7 +12,6 @@ import ru.vsu.cs.course2.deezmos.ExpressionTokenizer.Token;
 import ru.vsu.cs.course2.deezmos.TokenType;
 import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncAdd;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncNumber;
-import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.NodeCos;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.NodeParentheses;
 
 /**
@@ -80,6 +79,6 @@ public class ExpressionTree {
   }
 
   public ETNode recognizeOperator(TokenType tokenType) {
-    return new NodeCos();
+    return null;
   }
 }
