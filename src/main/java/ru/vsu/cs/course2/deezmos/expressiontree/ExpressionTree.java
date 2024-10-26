@@ -47,38 +47,41 @@ public class ExpressionTree {
     return tokens;
   }
 
-  public void parse() {
+  public void parse() throws IOException {
 
     Stack<ETNode> stack = new Stack<>();
     root = new ETNode();
     stack.push(root);
     ETNode currentNode = root;
 
-    for (Token token : tokens) {
-      if (token.type() == TokenType.L_PAREN) {
-        ETNode newNode = new ETNode();
-        currentNode.setLeft(newNode);
-        stack.push(currentNode);
-        currentNode = newNode;
+    try {
+      for (Token token : tokens) {
+        if (token.type() == TokenType.L_PAREN) {
+          ETNode newNode = new ETNode();
+          currentNode.setLeft(newNode);
+          stack.push(currentNode);
+          currentNode = newNode;
 
-      } else if (token.type() == TokenType.NUMBER) {
-        currentNode.setEvaluator(new FuncNumber(Double.parseDouble(token.value())));
-        currentNode = stack.pop();
-      } else if (token.type() == TokenType.PARAM) {
-        currentNode.setEvaluator(new FuncNumber(paramValues.get(token.value())));
-        currentNode = stack.pop();
-        Evaluator ev = new FuncAdd();
-      } else if (token.type() == TokenType.R_PAREN) {
-        currentNode = stack.pop();
-      }
-      if (BINARY_OPERATOR.contains(token.type())) {
+        } else if (token.type() == TokenType.NUMBER) {
+          currentNode.setEvaluator(new FuncNumber(Double.parseDouble(token.value())));
+          currentNode = stack.pop();
+        } else if (token.type() == TokenType.PARAM) {
+          currentNode.setEvaluator(new FuncNumber(paramValues.get(token.value())));
+          currentNode = stack.pop();
+          Evaluator ev = new FuncAdd();
+        } else if (token.type() == TokenType.R_PAREN) {
+          currentNode = stack.pop();
+        }
+        if (BINARY_OPERATOR.contains(token.type())) {
 
-        ETNode child = recognizeOperator(token.type());
-      } else if (token.type() == TokenType.R_PAREN) {
-        currentNode = stack.pop();
+          ETNode child = recognizeOperator(token.type());
+        } else if (token.type() == TokenType.R_PAREN) {
+          currentNode = stack.pop();
+        }
       }
+    } catch (Exception exception) {
+      throw new IOException("Parse Exception");
     }
-
   }
 
   public ETNode recognizeOperator(TokenType tokenType) {
