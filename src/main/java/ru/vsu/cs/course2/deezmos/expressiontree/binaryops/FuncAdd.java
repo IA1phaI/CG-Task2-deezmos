@@ -12,5 +12,4 @@ public class FuncAdd implements Evaluator {
   public double evaluate(ETNode left, ETNode right) {
     return left.evaluate() + right.evaluate();
   }
-
 }

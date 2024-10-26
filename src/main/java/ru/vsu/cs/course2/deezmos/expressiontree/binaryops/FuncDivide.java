@@ -12,5 +12,4 @@ public class FuncDivide implements Evaluator {
   public double evaluate(ETNode left, ETNode right) {
     return left.evaluate() / right.evaluate();
   }
-
 }

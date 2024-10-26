@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 
 import ru.vsu.cs.course2.deezmos.ExpressionTokenizer;
@@ -12,16 +13,18 @@ import ru.vsu.cs.course2.deezmos.ExpressionTokenizer.Token;
 import ru.vsu.cs.course2.deezmos.TokenType;
 import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncAdd;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncNumber;
-import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.NodeParentheses;
 
 /**
  * EpressionTree
  */
 public class ExpressionTree {
 
-  private static final HashSet<TokenType> UNARY_OPERATORS = HashSet<>(Set.of(ABS, SIN, COS, TG, CTG, ASIN, ACOS, ATG, ACTG, LN, LG));
+  private static final HashSet<TokenType> UNARY_OPERATORS = new HashSet<>(
+      Set.of(TokenType.ABS, TokenType.SIN, TokenType.COS, TokenType.TG, TokenType.CTG, TokenType.ASIN, TokenType.ACOS,
+          TokenType.ATG, TokenType.ACTG, TokenType.LN, TokenType.LG));
 
-  private static final HashSet<TokenType> BINARY_OPERATOR = HashSet<>(Set.of(PLUS, MINUS, MULT, DIVISION, POW, LOG));
+  private static final HashSet<TokenType> BINARY_OPERATOR = new HashSet<>(
+      Set.of(TokenType.PLUS, TokenType.MINUS, TokenType.MULT, TokenType.DIVISION, TokenType.POW, TokenType.LOG));
 
   private HashMap<String, Double> paramValues;
 
@@ -62,7 +65,7 @@ public class ExpressionTree {
         currentNode.setEvaluator(new FuncNumber(Double.parseDouble(token.value())));
         currentNode = stack.pop();
       } else if (token.type() == TokenType.PARAM) {
-        currentNode.setEvaluator(new FuncNumber(paramValues.get(token.value()));
+        currentNode.setEvaluator(new FuncNumber(paramValues.get(token.value())));
         currentNode = stack.pop();
         Evaluator ev = new FuncAdd();
       } else if (token.type() == TokenType.R_PAREN) {
