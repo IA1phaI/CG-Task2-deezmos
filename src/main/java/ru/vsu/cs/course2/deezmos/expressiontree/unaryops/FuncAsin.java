@@ -4,12 +4,12 @@ import ru.vsu.cs.course2.deezmos.expressiontree.ETNode;
 import ru.vsu.cs.course2.deezmos.expressiontree.Evaluator;
 
 /**
- * FuncLog
+ * FuncAsin
  */
-public class FuncLog implements Evaluator {
+public class FuncAsin implements Evaluator {
 
   @Override
   public double evaluate(ETNode left, ETNode right) {
-    return Math.log10(left.evaluate());
+    return Math.asin(left.evaluate());
   }
 }

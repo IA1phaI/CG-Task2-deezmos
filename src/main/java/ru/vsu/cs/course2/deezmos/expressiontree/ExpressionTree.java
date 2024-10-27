@@ -13,9 +13,21 @@ import ru.vsu.cs.course2.deezmos.ExpressionTokenizer.Token;
 import ru.vsu.cs.course2.deezmos.TokenType;
 import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncAdd;
 import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncDivide;
+import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncLog;
 import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncMultiply;
+import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncPow;
 import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncSubtract;
+import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncAcos;
+import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncActg;
+import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncAsin;
+import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncAtg;
+import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncCos;
+import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncCtg;
+import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncLg;
+import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncLn;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncNumber;
+import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncSin;
+import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncTg;
 
 /**
  * EpressionTree
@@ -104,12 +116,12 @@ public class ExpressionTree {
           operatorStack.push(token.type());
         } else if (token.type() == TokenType.R_BRACKET) {
           while (operatorStack.peek() != TokenType.L_BRACKET) {
-            popOperator(operatorStack, nodeStack);
+            popBinaryOperator(operatorStack, nodeStack);
           }
           // remove L_BRACKET
           operatorStack.pop();
         } else if (operatorStack.peek().precedence() >= token.type().precedence()) {
-          popOperator(operatorStack, nodeStack);
+          popBinaryOperator(operatorStack, nodeStack);
           operatorStack.push(token.type());
         } else {
           operatorStack.push(token.type());
@@ -118,14 +130,15 @@ public class ExpressionTree {
     }
 
     while (operatorStack.peek() != TokenType.EOL) {
-      popOperator(operatorStack, nodeStack);
+      popBinaryOperator(operatorStack, nodeStack);
     }
 
     root = nodeStack.peek();
   }
 
-  private void popOperator(Stack<TokenType> operatorStack, Stack<ETNode> nodeStack) {
-    ETNode node = new ETNode(recognizeOperator(operatorStack.pop()));
+  private void popBinaryOperator(Stack<TokenType> operatorStack, Stack<ETNode> nodeStack) {
+    TokenType operator = operatorStack.pop();
+    ETNode node = new ETNode(recognizeOperator(operator));
     node.setRight(nodeStack.pop());
     node.setLeft(nodeStack.pop());
 
@@ -145,6 +158,42 @@ public class ExpressionTree {
       }
       case DIVISION -> {
         return new FuncDivide();
+      }
+      case POW -> {
+        return new FuncPow();
+      }
+      case LOG -> {
+        return new FuncLog();
+      }
+      case ABS -> {
+        return new FuncSin();
+      }
+      case COS -> {
+        return new FuncCos();
+      }
+      case TG -> {
+        return new FuncTg();
+      }
+      case CTG -> {
+        return new FuncCtg();
+      }
+      case ASIN -> {
+        return new FuncAsin();
+      }
+      case ACOS -> {
+        return new FuncAcos();
+      }
+      case ATG -> {
+        return new FuncAtg();
+      }
+      case ACTG -> {
+        return new FuncActg();
+      }
+      case LN -> {
+        return new FuncLn();
+      }
+      case LG -> {
+        return new FuncLg();
       }
       default -> {
         throw new RuntimeException(String.format("Unsupported operator %s", tokenType));
