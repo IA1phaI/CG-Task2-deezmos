@@ -29,8 +29,8 @@ public class ExpressionTokenizer {
         List.of(
             new TokenPattern(Pattern.compile("\\s+"), TokenType.SPACE),
             new TokenPattern(Pattern.compile("-?\\d+(?:\\.\\d+)?"), TokenType.NUMBER),
-            new TokenPattern(Pattern.compile("\\("), TokenType.L_PAREN),
-            new TokenPattern(Pattern.compile("\\)"), TokenType.R_PAREN),
+            new TokenPattern(Pattern.compile("\\("), TokenType.L_BRACKET),
+            new TokenPattern(Pattern.compile("\\)"), TokenType.R_BRACKET),
             new TokenPattern(Pattern.compile("\\|"), TokenType.LINE),
             new TokenPattern(Pattern.compile(","), TokenType.COMMA),
             new TokenPattern(Pattern.compile("\\+"), TokenType.PLUS),
@@ -50,7 +50,7 @@ public class ExpressionTokenizer {
             new TokenPattern(Pattern.compile("actg"), TokenType.ACTG),
             new TokenPattern(Pattern.compile("ln"), TokenType.LN),
             new TokenPattern(Pattern.compile("lg"), TokenType.LG),
-            new TokenPattern(Pattern.compile("[a-zA-Z]+"), TokenType.PARAM)));
+            new TokenPattern(Pattern.compile("[a-zA-Z]+"), TokenType.VARIABLE)));
   }
 
   public ExpressionTokenizer(String string) {

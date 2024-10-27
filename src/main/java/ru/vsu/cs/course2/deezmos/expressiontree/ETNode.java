@@ -9,6 +9,20 @@ public class ETNode {
   private ETNode right;
   private Evaluator evaluator;
 
+  public ETNode(ETNode left, ETNode right, Evaluator evaluator) {
+    this.left = left;
+    this.right = right;
+    this.evaluator = evaluator;
+  }
+
+  public ETNode() {
+    this(null, null, null);
+  }
+
+  public ETNode(Evaluator evaluator) {
+    this(null, null, evaluator);
+  }
+
   public double evaluate() {
     return evaluator.evaluate(left, right);
   };

@@ -27,15 +27,15 @@ public class DeezmosApplication extends Application {
   public static void main(String[] args) throws IOException, RuntimeException {
 
     String expression = "25 + x - 34 * (25- 12)/cos-a^56";
+    expression = "(1 + 2 ) * 3";
     ExpressionTokenizer tokenizer = new ExpressionTokenizer(expression);
     while (tokenizer.hasNext()) {
       // tokenizer.next().value();
       Token token = tokenizer.next();
       System.out.printf("%s, %s\n", token.value(), token.type());
     }
-    expression = "(1 + 4 - 5)";
-    expression = "(7 + 3 * (5 - 2) - 4)";
-    // expression = "3 + 4 * 5";
+     expression = "(1 + 4 - 5)";
+     expression = "(7 + 3 * (5 - 2) - 4)";
     ExpressionTree eprTree = new ExpressionTree(expression);
     System.out.println(eprTree.evaluate());
 

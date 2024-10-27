@@ -1,5 +1,7 @@
 package ru.vsu.cs.course2.deezmos.expressiontree.unaryops;
 
+import java.io.IOException;
+
 import ru.vsu.cs.course2.deezmos.expressiontree.ETNode;
 import ru.vsu.cs.course2.deezmos.expressiontree.Evaluator;
 
@@ -12,6 +14,10 @@ public class FuncNumber implements Evaluator {
 
   public FuncNumber(double value) {
     this.value = value;
+  }
+
+  public FuncNumber(String value) {
+    this(Double.parseDouble(value));
   }
 
   @Override

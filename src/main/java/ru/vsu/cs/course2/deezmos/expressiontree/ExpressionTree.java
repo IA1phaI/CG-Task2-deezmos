@@ -51,7 +51,6 @@ public class ExpressionTree {
 
   public ExpressionTree(String expression) throws IOException {
     tokens = tokenize(expression);
-    root = new ETNode();
   }
 
   private List<Token> tokenize(String expression) throws IOException {
@@ -62,7 +61,7 @@ public class ExpressionTree {
     while (tokenizer.hasNext()) {
       Token token = tokenizer.next();
 
-      if (token.type() == TokenType.PARAM) {
+      if (token.type() == TokenType.VARIABLE) {
         variableValues.put(token.value(), 1.0);
       }
 
@@ -89,43 +88,48 @@ public class ExpressionTree {
 
   private void parse() throws IOException {
 
-    Stack<ETNode> stack = new Stack<>();
-    stack.push(root);
-    ETNode currentNode = root;
+    Stack<TokenType> operatorStack = new Stack<>();
+    operatorStack.push(TokenType.EOL);
+    Stack<ETNode> nodeStack = new Stack<>();
 
-    try {
-      for (Token token : tokens) {
-        if (token.type() == TokenType.L_PAREN) {
-          stack.push(currentNode);
-
-          ETNode newNode = new ETNode();
-          currentNode.setLeft(newNode);
-
-          currentNode = newNode;
-        } else if (token.type() == TokenType.NUMBER) {
-          currentNode.setEvaluator(new FuncNumber(Double.parseDouble(token.value())));
-
-          currentNode = stack.pop();
-        } else if (token.type() == TokenType.PARAM) {
-
-          currentNode.setEvaluator(new FuncNumber(variableValues.get(token.value())));
-
-          currentNode = stack.pop();
-        } else if (BINARY_OPERATOR.contains(token.type())) {
-          currentNode.setEvaluator(recognizeOperator(token.type()));
-
-          ETNode newNode = new ETNode();
-          currentNode.setRight(newNode);
-          stack.push(currentNode);
-
-          currentNode = newNode;
-        } else if (token.type() == TokenType.R_PAREN) {
-          currentNode = stack.pop();
+    for (Token token : tokens) {
+      if (token.type() == TokenType.NUMBER) {
+        ETNode node = new ETNode(new FuncNumber(token.value()));
+        nodeStack.push(node);
+      } else if (token.type() == TokenType.VARIABLE) {
+        ETNode node = new ETNode(new FuncNumber(variableValues.get(token.value())));
+        nodeStack.push(node);
+      } else {
+        if (token.type() == TokenType.L_BRACKET) {
+          operatorStack.push(token.type());
+        } else if (token.type() == TokenType.R_BRACKET) {
+          while (operatorStack.peek() != TokenType.L_BRACKET) {
+            popOperator(operatorStack, nodeStack);
+          }
+          // remove L_BRACKET
+          operatorStack.pop();
+        } else if (operatorStack.peek().precedence() >= token.type().precedence()) {
+          popOperator(operatorStack, nodeStack);
+          operatorStack.push(token.type());
+        } else {
+          operatorStack.push(token.type());
         }
       }
-    } catch (Exception exception) {
-      throw new IOException("Parse Exception");
     }
+
+    while (operatorStack.peek() != TokenType.EOL) {
+      popOperator(operatorStack, nodeStack);
+    }
+
+    root = nodeStack.peek();
+  }
+
+  private void popOperator(Stack<TokenType> operatorStack, Stack<ETNode> nodeStack) {
+    ETNode node = new ETNode(recognizeOperator(operatorStack.pop()));
+    node.setRight(nodeStack.pop());
+    node.setLeft(nodeStack.pop());
+
+    nodeStack.push(node);
   }
 
   public Evaluator recognizeOperator(TokenType tokenType) throws RuntimeException {
@@ -143,7 +147,7 @@ public class ExpressionTree {
         return new FuncDivide();
       }
       default -> {
-        throw new RuntimeException("Unsupported operator");
+        throw new RuntimeException(String.format("Unsupported operator %s", tokenType));
       }
     }
   }

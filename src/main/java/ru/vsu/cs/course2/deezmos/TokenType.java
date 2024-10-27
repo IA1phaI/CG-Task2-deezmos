@@ -4,9 +4,9 @@ package ru.vsu.cs.course2.deezmos;
 public enum TokenType {
   SPACE,
   NUMBER,
-  PARAM,
-  L_PAREN,
-  R_PAREN,
+  VARIABLE,
+  L_BRACKET,
+  R_BRACKET,
   LINE,
   COMMA,
   PLUS,
@@ -27,4 +27,18 @@ public enum TokenType {
   LN,
   LG,
   EOL;
+
+  public int precedence() {
+    switch (this) {
+      case SPACE, COMMA, EOL, L_BRACKET, R_BRACKET -> {
+        return -1;
+      }
+      case PLUS, MINUS -> {
+        return 0;
+      }
+      default -> {
+        return 1;
+      }
+    }
+  }
 }
