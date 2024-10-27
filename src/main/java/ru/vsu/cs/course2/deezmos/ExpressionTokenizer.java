@@ -28,30 +28,30 @@ public class ExpressionTokenizer {
   static {
     tokenPatterns = new LinkedList<>(
         List.of(
-            new TokenPattern(Pattern.compile("^\\s+"), TokenType.SPACE),
-            new TokenPattern(Pattern.compile("^-?\\d+(?:\\.\\d+)?"), TokenType.NUMBER),
-            new TokenPattern(Pattern.compile("^\\("), TokenType.L_PAREN),
-            new TokenPattern(Pattern.compile("^\\)"), TokenType.R_PAREN),
-            new TokenPattern(Pattern.compile("^\\|"), TokenType.LINE),
-            new TokenPattern(Pattern.compile("^,"), TokenType.COMMA),
-            new TokenPattern(Pattern.compile("^\\+"), TokenType.PLUS),
-            new TokenPattern(Pattern.compile("^\\-"), TokenType.MINUS),
-            new TokenPattern(Pattern.compile("^\\*"), TokenType.MULT),
-            new TokenPattern(Pattern.compile("^\\^"), TokenType.POW),
-            new TokenPattern(Pattern.compile("^\\/"), TokenType.DIVISION),
-            new TokenPattern(Pattern.compile("^log"), TokenType.LOG),
-            new TokenPattern(Pattern.compile("^abs"), TokenType.ABS),
-            new TokenPattern(Pattern.compile("^sin"), TokenType.SIN),
-            new TokenPattern(Pattern.compile("^cos"), TokenType.COS),
-            new TokenPattern(Pattern.compile("^tg"), TokenType.TG),
-            new TokenPattern(Pattern.compile("^ctg"), TokenType.CTG),
-            new TokenPattern(Pattern.compile("^asin"), TokenType.ASIN),
-            new TokenPattern(Pattern.compile("^acos"), TokenType.ACOS),
-            new TokenPattern(Pattern.compile("^atg"), TokenType.ATG),
-            new TokenPattern(Pattern.compile("^actg"), TokenType.ACTG),
-            new TokenPattern(Pattern.compile("^ln"), TokenType.LN),
-            new TokenPattern(Pattern.compile("^lg"), TokenType.LG),
-            new TokenPattern(Pattern.compile("^[a-zA-Z]+"), TokenType.PARAM)));
+            new TokenPattern(Pattern.compile("\\s+"), TokenType.SPACE),
+            new TokenPattern(Pattern.compile("-?\\d+(?:\\.\\d+)?"), TokenType.NUMBER),
+            new TokenPattern(Pattern.compile("\\("), TokenType.L_PAREN),
+            new TokenPattern(Pattern.compile("\\)"), TokenType.R_PAREN),
+            new TokenPattern(Pattern.compile("\\|"), TokenType.LINE),
+            new TokenPattern(Pattern.compile(","), TokenType.COMMA),
+            new TokenPattern(Pattern.compile("\\+"), TokenType.PLUS),
+            new TokenPattern(Pattern.compile("\\-"), TokenType.MINUS),
+            new TokenPattern(Pattern.compile("\\*"), TokenType.MULT),
+            new TokenPattern(Pattern.compile("\\^"), TokenType.POW),
+            new TokenPattern(Pattern.compile("\\/"), TokenType.DIVISION),
+            new TokenPattern(Pattern.compile("log"), TokenType.LOG),
+            new TokenPattern(Pattern.compile("abs"), TokenType.ABS),
+            new TokenPattern(Pattern.compile("sin"), TokenType.SIN),
+            new TokenPattern(Pattern.compile("cos"), TokenType.COS),
+            new TokenPattern(Pattern.compile("tg"), TokenType.TG),
+            new TokenPattern(Pattern.compile("ctg"), TokenType.CTG),
+            new TokenPattern(Pattern.compile("asin"), TokenType.ASIN),
+            new TokenPattern(Pattern.compile("acos"), TokenType.ACOS),
+            new TokenPattern(Pattern.compile("atg"), TokenType.ATG),
+            new TokenPattern(Pattern.compile("actg"), TokenType.ACTG),
+            new TokenPattern(Pattern.compile("ln"), TokenType.LN),
+            new TokenPattern(Pattern.compile("lg"), TokenType.LG),
+            new TokenPattern(Pattern.compile("[a-zA-Z]+"), TokenType.PARAM)));
   }
 
   public ExpressionTokenizer() {
@@ -68,26 +68,29 @@ public class ExpressionTokenizer {
       return new Token("<EOL>", TokenType.EOL);
     }
 
-    String substr = this.string.substring(cursor, string.length());
     Matcher matcher;
 
     for (TokenPattern tokenPattern : tokenPatterns) {
-      matcher = tokenPattern.pattern().matcher(substr);
+      matcher = tokenPattern.pattern().matcher(string);
 
-      if (!matcher.find()) {
+      if (!matcher.find(cursor)) {
         continue;
       }
 
-      this.cursor += matcher.end();
+      if (matcher.start() != cursor) {
+        continue;
+      }
+
+      this.cursor = matcher.end();
 
       if (tokenPattern.type() == TokenType.SPACE || tokenPattern.type() == TokenType.COMMA) {
         return this.next();
       }
 
-      return new Token(substr.substring(matcher.start(), matcher.end()), tokenPattern.type());
+      return new Token(string.substring(matcher.start(), matcher.end()), tokenPattern.type());
     }
 
-    throw new IOException(String.format("Tokenization error: What the sigma is %s", substr));
+    throw new IOException(String.format("Tokenization error: What the sigma is %s", string.substring(cursor)));
   }
 
   public boolean hasNext() {
