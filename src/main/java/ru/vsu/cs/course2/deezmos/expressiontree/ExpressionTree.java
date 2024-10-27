@@ -12,6 +12,9 @@ import ru.vsu.cs.course2.deezmos.ExpressionTokenizer;
 import ru.vsu.cs.course2.deezmos.ExpressionTokenizer.Token;
 import ru.vsu.cs.course2.deezmos.TokenType;
 import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncAdd;
+import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncDivide;
+import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncMultiply;
+import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncSubtract;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncNumber;
 
 /**
@@ -20,25 +23,39 @@ import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncNumber;
 public class ExpressionTree {
 
   private static final HashSet<TokenType> UNARY_OPERATORS = new HashSet<>(
-      Set.of(TokenType.ABS, TokenType.SIN, TokenType.COS, TokenType.TG, TokenType.CTG, TokenType.ASIN, TokenType.ACOS,
-          TokenType.ATG, TokenType.ACTG, TokenType.LN, TokenType.LG));
+      Set.of(
+          TokenType.ABS,
+          TokenType.SIN,
+          TokenType.COS,
+          TokenType.TG,
+          TokenType.CTG,
+          TokenType.ASIN,
+          TokenType.ACOS,
+          TokenType.ATG,
+          TokenType.ACTG,
+          TokenType.LN,
+          TokenType.LG));
 
   private static final HashSet<TokenType> BINARY_OPERATOR = new HashSet<>(
-      Set.of(TokenType.PLUS, TokenType.MINUS, TokenType.MULT, TokenType.DIVISION, TokenType.POW, TokenType.LOG));
-
-  private HashMap<String, Double> paramValues;
+      Set.of(
+          TokenType.PLUS,
+          TokenType.MINUS,
+          TokenType.MULT,
+          TokenType.DIVISION,
+          TokenType.POW,
+          TokenType.LOG));
 
   private ETNode root;
   List<Token> tokens;
-  HashMap<String, Double> variableValues;
+  private HashMap<String, Double> variableValues;
 
   public ExpressionTree(String expression) throws IOException {
     tokens = tokenize(expression);
     root = new ETNode();
   }
 
-  public List<Token> tokenize(String expression) throws IOException {
-    ExpressionTokenizer tokenizer = new ExpressionTokenizer();
+  private List<Token> tokenize(String expression) throws IOException {
+    ExpressionTokenizer tokenizer = new ExpressionTokenizer(expression);
     LinkedList<Token> tokens = new LinkedList<>();
     variableValues = new HashMap<>();
 
@@ -49,7 +66,7 @@ public class ExpressionTree {
         variableValues.put(token.value(), 1.0);
       }
 
-      tokens.add(tokenizer.next());
+      tokens.add(token);
     }
 
     return tokens;
@@ -58,7 +75,7 @@ public class ExpressionTree {
   public void setVariableValue(String variable, double value) throws IOException {
     variable = variable.toLowerCase();
 
-    if (hasVariable(variable)) {
+    if (!hasVariable(variable)) {
       throw new IOException(String.format("No variable \"%s\" in current expression", variable));
     }
 
@@ -70,7 +87,7 @@ public class ExpressionTree {
     return variableValues.containsKey(variable);
   }
 
-  public void parse() throws IOException {
+  private void parse() throws IOException {
 
     Stack<ETNode> stack = new Stack<>();
     stack.push(root);
@@ -79,24 +96,29 @@ public class ExpressionTree {
     try {
       for (Token token : tokens) {
         if (token.type() == TokenType.L_PAREN) {
+          stack.push(currentNode);
+
           ETNode newNode = new ETNode();
           currentNode.setLeft(newNode);
-          stack.push(currentNode);
-          currentNode = newNode;
 
+          currentNode = newNode;
         } else if (token.type() == TokenType.NUMBER) {
           currentNode.setEvaluator(new FuncNumber(Double.parseDouble(token.value())));
+
           currentNode = stack.pop();
         } else if (token.type() == TokenType.PARAM) {
-          currentNode.setEvaluator(new FuncNumber(paramValues.get(token.value())));
-          currentNode = stack.pop();
-          Evaluator ev = new FuncAdd();
-        } else if (token.type() == TokenType.R_PAREN) {
-          currentNode = stack.pop();
-        }
-        if (BINARY_OPERATOR.contains(token.type())) {
 
-          ETNode child = recognizeOperator(token.type());
+          currentNode.setEvaluator(new FuncNumber(variableValues.get(token.value())));
+
+          currentNode = stack.pop();
+        } else if (BINARY_OPERATOR.contains(token.type())) {
+          currentNode.setEvaluator(recognizeOperator(token.type()));
+
+          ETNode newNode = new ETNode();
+          currentNode.setRight(newNode);
+          stack.push(currentNode);
+
+          currentNode = newNode;
         } else if (token.type() == TokenType.R_PAREN) {
           currentNode = stack.pop();
         }
@@ -106,7 +128,28 @@ public class ExpressionTree {
     }
   }
 
-  public ETNode recognizeOperator(TokenType tokenType) {
-    return null;
+  public Evaluator recognizeOperator(TokenType tokenType) throws RuntimeException {
+    switch (tokenType) {
+      case PLUS -> {
+        return new FuncAdd();
+      }
+      case MINUS -> {
+        return new FuncSubtract();
+      }
+      case MULT -> {
+        return new FuncMultiply();
+      }
+      case DIVISION -> {
+        return new FuncDivide();
+      }
+      default -> {
+        throw new RuntimeException("Unsupported operator");
+      }
+    }
+  }
+
+  public double evaluate() throws IOException {
+    this.parse();
+    return root.evaluate();
   }
 }
