@@ -1,9 +1,5 @@
 package ru.vsu.cs.course2.deezmos;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-
 /** Tokens of equation. */
 public enum TokenType {
   SPACE,
