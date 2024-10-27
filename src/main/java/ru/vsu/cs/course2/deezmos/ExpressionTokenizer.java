@@ -19,7 +19,6 @@ public class ExpressionTokenizer {
   public record TokenPattern(Pattern pattern, TokenType type) {
   }
 
-  private LinkedList<Token> tokens;
   private int cursor;
   private String string;
 
@@ -54,13 +53,9 @@ public class ExpressionTokenizer {
             new TokenPattern(Pattern.compile("[a-zA-Z]+"), TokenType.PARAM)));
   }
 
-  public ExpressionTokenizer() {
-    this.tokens = new LinkedList<>();
-    this.cursor = 0;
-  }
-
-  public void setData(String string) {
+  public ExpressionTokenizer(String string) {
     this.string = string.toLowerCase();
+    this.cursor = 0;
   }
 
   public Token next() throws IOException {
