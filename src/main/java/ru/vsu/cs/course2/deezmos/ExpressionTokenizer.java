@@ -25,15 +25,6 @@ public class ExpressionTokenizer {
 
   private static final LinkedList<TokenPattern> tokenPatterns;
 
-  public ExpressionTokenizer() {
-    this.tokens = new LinkedList<>();
-    this.cursor = 0;
-  }
-
-  public void setData(String string) {
-    this.string = string.toLowerCase();
-  }
-
   static {
     tokenPatterns = new LinkedList<>(
         List.of(
@@ -60,8 +51,16 @@ public class ExpressionTokenizer {
             new TokenPattern(Pattern.compile("^actg"), TokenType.ACTG),
             new TokenPattern(Pattern.compile("^ln"), TokenType.LN),
             new TokenPattern(Pattern.compile("^lg"), TokenType.LG),
-            new TokenPattern(Pattern.compile("^x"), TokenType.X),
             new TokenPattern(Pattern.compile("^[a-zA-Z]+"), TokenType.PARAM)));
+  }
+
+  public ExpressionTokenizer() {
+    this.tokens = new LinkedList<>();
+    this.cursor = 0;
+  }
+
+  public void setData(String string) {
+    this.string = string.toLowerCase();
   }
 
   public Token next() throws IOException {

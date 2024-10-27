@@ -9,7 +9,6 @@ public enum TokenType {
   SPACE,
   NUMBER,
   PARAM,
-  X,
   L_PAREN,
   R_PAREN,
   LINE,

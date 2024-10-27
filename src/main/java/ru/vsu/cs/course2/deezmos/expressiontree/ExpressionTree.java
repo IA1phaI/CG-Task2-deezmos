@@ -29,28 +29,50 @@ public class ExpressionTree {
   private HashMap<String, Double> paramValues;
 
   private ETNode root;
-  private String expession;
   List<Token> tokens;
+  HashMap<String, Double> variableValues;
 
   public ExpressionTree(String expression) throws IOException {
     tokens = tokenize(expression);
+    root = new ETNode();
   }
 
   public List<Token> tokenize(String expression) throws IOException {
     ExpressionTokenizer tokenizer = new ExpressionTokenizer();
-    tokenizer.setData(expession);
     LinkedList<Token> tokens = new LinkedList<>();
+    variableValues = new HashMap<>();
+
     while (tokenizer.hasNext()) {
+      Token token = tokenizer.next();
+
+      if (token.type() == TokenType.PARAM) {
+        variableValues.put(token.value(), 1.0);
+      }
+
       tokens.add(tokenizer.next());
     }
 
     return tokens;
   }
 
+  public void setVariableValue(String variable, double value) throws IOException {
+    variable = variable.toLowerCase();
+
+    if (hasVariable(variable)) {
+      throw new IOException(String.format("No variable \"%s\" in current expression", variable));
+    }
+
+    variableValues.put(variable, value);
+  }
+
+  public boolean hasVariable(String variable) {
+    variable = variable.toLowerCase();
+    return variableValues.containsKey(variable);
+  }
+
   public void parse() throws IOException {
 
     Stack<ETNode> stack = new Stack<>();
-    root = new ETNode();
     stack.push(root);
     ETNode currentNode = root;
 

@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ru.vsu.cs.course2.deezmos.ExpressionTokenizer;
+import ru.vsu.cs.course2.deezmos.ExpressionTokenizer.Token;
 
 /** JavaFX DeezMos GUI. */
 public class DeezmosApplication extends Application {
@@ -26,9 +27,10 @@ public class DeezmosApplication extends Application {
 
     ExpressionTokenizer tokenizer = new ExpressionTokenizer();
     tokenizer.setData("25 + x - 34 * (25- 12)/cos-a^56");
-    while (true) {
+    while (tokenizer.hasNext()) {
       // tokenizer.next().value();
-      System.out.println(tokenizer.next().value());
+      Token token = tokenizer.next();
+      System.out.printf("%s, %s\n", token.value(), token.type());
     }
 
     // launch();
