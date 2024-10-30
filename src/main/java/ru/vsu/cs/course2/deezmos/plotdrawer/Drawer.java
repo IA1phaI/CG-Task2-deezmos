@@ -197,6 +197,7 @@ public class Drawer {
       }
     }
   }
+
   // WU LINE
 
   private float fracPart(float value) {
