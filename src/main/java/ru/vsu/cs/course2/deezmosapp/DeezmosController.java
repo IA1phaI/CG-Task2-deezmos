@@ -74,8 +74,9 @@ public class DeezmosController {
     Drawer drawer = new Drawer(gc);
     drawer.drawPixel(50, 50, Color.RED);
     drawer.drawLineDDA(0, 0, 80, 200, Color.BLUE);
-    drawer.drawLineBresenham(0, 0, 2000, 1000, Color.CORAL);
-    drawer.drawLineBresenham(1000, 2000, 922, 228, Color.DEEPPINK);
+    drawer.drawLineBresenham(10, 20, 200, 100, Color.CORAL);
+    drawer.drawLineBresenham(200, 100, 0, 0, Color.CYAN);
+    drawer.drawLineBresenhamFloat(100, 200, 50, 50, Color.DEEPPINK);
     drawer.drawLineWu(6, 50, 900, 400, Color.DARKGREEN);
     drawer.drawLineWu(400, 900, 50, 6, Color.CORAL);
   }

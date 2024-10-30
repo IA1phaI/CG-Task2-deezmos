@@ -30,6 +30,8 @@ public class Drawer {
         opacity));
   }
 
+  // DDA LINE
+
   public void drawLineDDA(int x0, int y0, int x1, int y1, Color color) {
     int dx = (x1 - x0);
     int dy = (y1 - y0);
@@ -48,9 +50,25 @@ public class Drawer {
     }
   }
 
-  // DDA LINE
+  // BRESENHAM LINE ON FLOAT
 
-  public void drawDefauldLineBresenhamFloat(int x0, int y0, int x1, int y1, Color color) {
+  public void drawLineBresenhamFloat(int x0, int y0, int x1, int y1, Color color) {
+    if (Math.abs(y1 - y0) < Math.abs(x1 - x0)) {
+      if (x0 > x1) {
+        drawLineBresenhamFloatLow(x1, y1, x0, y0, color);
+      } else {
+        drawLineBresenhamFloatLow(x0, y0, x1, y1, color);
+      }
+    } else {
+      if (y0 > y1) {
+        drawLineBresenhamFloatHigh(x1, y1, x0, y0, color);
+      } else {
+        drawLineBresenhamFloatHigh(x0, y0, x1, y1, color);
+      }
+    }
+  }
+
+  public void drawLineBresenhamFloatLow(int x0, int y0, int x1, int y1, Color color) {
     int deltaX = Math.abs(x1 - x0);
     int deltaY = Math.abs(y1 - y0);
     int y = y0;
@@ -77,28 +95,67 @@ public class Drawer {
     }
   }
 
-  // BRESENHAM LINE
+  public void drawLineBresenhamFloatHigh(int x0, int y0, int x1, int y1, Color color) {
+    int deltaX = Math.abs(x1 - x0);
+    int deltaY = Math.abs(y1 - y0);
+    int x = x0;
+    int directionX = x1 - x0;
 
-  public void drawLineBresenham(int x0, int y0, int x1, int y1, Color color) {
-    drawDefaultLineBresenham(x0, y0, x1, y1, color);
+    float error = 0;
+    float deltaErr = (deltaX + 1) * 1.0f / (deltaY + 1);
+
+    if (directionX > 0) {
+      directionX = 1;
+    } else if (directionX < 0) {
+      directionX = -1;
+    }
+
+    for (int y = y0; y <= y1; y++) {
+      drawPixel(x, y, color);
+
+      error = error + deltaErr;
+
+      if (error >= 1.0f) {
+        x = x + directionX;
+        error = error - 1.0f;
+      }
+    }
   }
 
-  private void drawDefaultLineBresenham(int x0, int y0, int x1, int y1, Color color) {
-    int diry = y1 - y0;
+  // BRESENHAM LINE ON INTEGERS (DEFAULT)
+
+  public void drawLineBresenham(int x0, int y0, int x1, int y1, Color color) {
+    if (Math.abs(y1 - y0) < Math.abs(x1 - x0)) {
+      if (x0 > x1) {
+        drawLineBresenhamLow(x1, y1, x0, y0, color);
+      } else {
+        drawLineBresenhamLow(x0, y0, x1, y1, color);
+      }
+    } else {
+      if (y0 > y1) {
+        drawLineBresenhamHigh(x1, y1, x0, y0, color);
+      } else {
+        drawLineBresenhamHigh(x0, y0, x1, y1, color);
+      }
+    }
+  }
+
+  private void drawLineBresenhamLow(int x0, int y0, int x1, int y1, Color color) {
+    int dirY = y1 - y0;
 
     int absDx = Math.abs(x1 - x0);
-    int absDy = Math.abs(diry);
-
-    int y = y0;
+    int absDy = Math.abs(dirY);
 
     int err = 0;
     int derr = absDy + 1;
 
-    if (diry > 0) {
-      diry = 1;
-    } else if (diry < 0) {
-      diry = -1;
+    if (dirY > 0) {
+      dirY = 1;
+    } else if (dirY < 0) {
+      dirY = -1;
     }
+
+    int y = y0;
 
     for (int x = x0; x <= x1; x++) {
       drawPixel(x, y, color);
@@ -106,12 +163,40 @@ public class Drawer {
       err += derr;
 
       if (err >= (absDx + 1)) {
-        y += diry;
+        y += dirY;
         err -= (absDx + 1);
       }
     }
   }
 
+  private void drawLineBresenhamHigh(int x0, int y0, int x1, int y1, Color color) {
+    int dirX = x1 - x0;
+
+    int absDx = Math.abs(dirX);
+    int absDy = Math.abs(y1 - y0);
+
+    int err = 0;
+    int derr = absDx + 1;
+
+    if (dirX > 0) {
+      dirX = 1;
+    } else if (dirX < 0) {
+      dirX = -1;
+    }
+
+    int x = x0;
+
+    for (int y = y0; y <= y1; y++) {
+      drawPixel(x, y, color);
+
+      err += derr;
+
+      if (err >= (absDy + 1)) {
+        x += dirX;
+        err -= (absDy + 1);
+      }
+    }
+  }
   // WU LINE
 
   private float fracPart(float value) {
