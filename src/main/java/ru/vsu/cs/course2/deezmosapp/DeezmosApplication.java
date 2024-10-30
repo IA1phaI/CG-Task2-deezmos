@@ -40,6 +40,6 @@ public class DeezmosApplication extends Application {
     ExpressionTree exprTree = new ExpressionTree(expression);
     System.out.println(String.format("Result: %s\n", exprTree.evaluate()));
 
-    // launch();
+    launch();
   }
 }
