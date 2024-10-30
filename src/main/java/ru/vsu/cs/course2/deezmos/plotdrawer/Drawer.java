@@ -1,13 +1,14 @@
 package ru.vsu.cs.course2.deezmos.plotdrawer;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.PixelFormat;
 import javafx.scene.paint.Color;
 
 /**
  * PlotDrawer
  */
 public class Drawer {
+
+  public static final float EPS = 0.0000001f;
 
   private GraphicsContext gc;
 
@@ -122,13 +123,18 @@ public class Drawer {
   }
 
   public void drawLineWu(float x0, float y0, float x1, float y1, Color color) {
-
     boolean steep = Math.abs(y1 - y0) > Math.abs(x1 - x0);
+
     if (steep) {
       float tmp = x0;
       x0 = y0;
       y0 = tmp;
+
+      tmp = x1;
+      x1 = y1;
+      y1 = tmp;
     }
+
     if (x0 > x1) {
       float tmp = x0;
       x0 = x1;
@@ -142,7 +148,7 @@ public class Drawer {
     float dx = x1 - x0;
     float dy = y1 - y0;
 
-    float gradient = dx == 0 ? 1.0f : dy * 1.0f / dx;
+    float gradient = Math.abs(dx) < EPS ? 1.0f : dy * 1.0f / dx;
 
     float xEnd = Math.round(x0);
     float yEnd = y0 + gradient * (xEnd - x0);
