@@ -116,12 +116,12 @@ public class ExpressionTree {
           operatorStack.push(token.type());
         } else if (token.type() == TokenType.R_BRACKET) {
           while (operatorStack.peek() != TokenType.L_BRACKET) {
-            popBinaryOperator(operatorStack, nodeStack);
+            popOperator(operatorStack, nodeStack);
           }
           // remove L_BRACKET
           operatorStack.pop();
         } else if (operatorStack.peek().precedence() >= token.type().precedence()) {
-          popBinaryOperator(operatorStack, nodeStack);
+          popOperator(operatorStack, nodeStack);
           operatorStack.push(token.type());
         } else {
           operatorStack.push(token.type());
@@ -130,16 +130,18 @@ public class ExpressionTree {
     }
 
     while (operatorStack.peek() != TokenType.EOL) {
-      popBinaryOperator(operatorStack, nodeStack);
+      popOperator(operatorStack, nodeStack);
     }
 
     root = nodeStack.peek();
   }
 
-  private void popBinaryOperator(Stack<TokenType> operatorStack, Stack<ETNode> nodeStack) {
+  private void popOperator(Stack<TokenType> operatorStack, Stack<ETNode> nodeStack) {
     TokenType operator = operatorStack.pop();
     ETNode node = new ETNode(recognizeOperator(operator));
-    node.setRight(nodeStack.pop());
+    if (BINARY_OPERATOR.contains(operator)) {
+      node.setRight(nodeStack.pop());
+    }
     node.setLeft(nodeStack.pop());
 
     nodeStack.push(node);
@@ -166,6 +168,9 @@ public class ExpressionTree {
         return new FuncLog();
       }
       case ABS -> {
+        return new FuncSin();
+      }
+      case SIN -> {
         return new FuncSin();
       }
       case COS -> {

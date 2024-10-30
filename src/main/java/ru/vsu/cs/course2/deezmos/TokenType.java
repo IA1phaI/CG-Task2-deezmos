@@ -36,9 +36,13 @@ public enum TokenType {
       case PLUS, MINUS -> {
         return 0;
       }
-      default -> {
+      case MULT, DIVISION -> {
         return 1;
+      }
+      default -> {
+        return 2;
       }
     }
   }
+  // TODO: function that gives a type of an operator
 }
