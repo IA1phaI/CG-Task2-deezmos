@@ -2,15 +2,14 @@ package ru.vsu.cs.course2.deezmos.expressiontree;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import java.util.Stack;
 
 import ru.vsu.cs.course2.deezmos.ExpressionTokenizer;
 import ru.vsu.cs.course2.deezmos.ExpressionTokenizer.Token;
 import ru.vsu.cs.course2.deezmos.TokenType;
+import ru.vsu.cs.course2.deezmos.TokenType.OperatorType;
 import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncAdd;
 import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncDivide;
 import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncLog;
@@ -33,29 +32,6 @@ import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncTg;
  * EpressionTree
  */
 public class ExpressionTree {
-
-  private static final HashSet<TokenType> UNARY_OPERATORS = new HashSet<>(
-      Set.of(
-          TokenType.ABS,
-          TokenType.SIN,
-          TokenType.COS,
-          TokenType.TG,
-          TokenType.CTG,
-          TokenType.ASIN,
-          TokenType.ACOS,
-          TokenType.ATG,
-          TokenType.ACTG,
-          TokenType.LN,
-          TokenType.LG));
-
-  private static final HashSet<TokenType> BINARY_OPERATOR = new HashSet<>(
-      Set.of(
-          TokenType.PLUS,
-          TokenType.MINUS,
-          TokenType.MULT,
-          TokenType.DIVISION,
-          TokenType.POW,
-          TokenType.LOG));
 
   private ETNode root;
   List<Token> tokens;
@@ -139,7 +115,7 @@ public class ExpressionTree {
   private void popOperator(Stack<TokenType> operatorStack, Stack<ETNode> nodeStack) {
     TokenType operator = operatorStack.pop();
     ETNode node = new ETNode(recognizeOperator(operator));
-    if (BINARY_OPERATOR.contains(operator)) {
+    if (operator.getOperatorType() == OperatorType.BINARY_OPERATOR) {
       node.setRight(nodeStack.pop());
     }
     node.setLeft(nodeStack.pop());

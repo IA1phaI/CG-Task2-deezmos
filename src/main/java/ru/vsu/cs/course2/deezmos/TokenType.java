@@ -28,6 +28,12 @@ public enum TokenType {
   LG,
   EOL;
 
+  public enum OperatorType {
+    UNARY_OPERATOR,
+    BINARY_OPERATOR,
+    NON_OPERATOR;
+  }
+
   public int precedence() {
     switch (this) {
       case SPACE, COMMA, EOL, L_BRACKET, R_BRACKET -> {
@@ -44,5 +50,18 @@ public enum TokenType {
       }
     }
   }
-  // TODO: function that gives a type of an operator
+
+  public OperatorType getOperatorType() {
+    switch (this) {
+      case PLUS, MINUS, MULT, DIVISION, POW, LOG -> {
+        return OperatorType.BINARY_OPERATOR;
+      }
+      case ABS, SIN, COS, TG, CTG, ASIN, ACOS, ATG, ACTG, LN, LG -> {
+        return OperatorType.UNARY_OPERATOR;
+      }
+      default -> {
+        return OperatorType.NON_OPERATOR;
+      }
+    }
+  }
 }
