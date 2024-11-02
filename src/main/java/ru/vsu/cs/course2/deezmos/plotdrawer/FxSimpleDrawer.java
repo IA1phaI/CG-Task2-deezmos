@@ -4,15 +4,15 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 /**
- * PlotDrawer
+ * FxPlotDrawer
  */
-public class Drawer {
+public class FxSimpleDrawer {
 
   public static final float EPS = 0.0000001f;
 
   private GraphicsContext gc;
 
-  public Drawer(GraphicsContext graphicsContext) {
+  public FxSimpleDrawer(GraphicsContext graphicsContext) {
     this.gc = graphicsContext;
   }
 
