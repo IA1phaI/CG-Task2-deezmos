@@ -4,6 +4,7 @@
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncCos.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncActg.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncAsin.java
+/home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/plotdrawer/FxPlotDrawer.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expressiontree/binaryops/FuncDivide.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expressiontree/ETNode.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expressiontree/ExpressionTree.java
@@ -11,6 +12,7 @@
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncSin.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncAbs.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncLn.java
+/home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncVariable.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/module-info.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmosapp/DeezmosController.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmosapp/DeezmosApplication.java
@@ -18,6 +20,7 @@
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expressiontree/Evaluator.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expressiontree/binaryops/FuncPow.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncNumber.java
+/home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/plotdrawer/FxSimpleDrawer.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncAcos.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncLg.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/ExpressionTokenizer.java

@@ -17,7 +17,7 @@ public class FxPlotDrawer {
   private int shiftX;
   private int shiftY;
 
-  private double scale;
+  private double scale = 50;
 
   public int getWidth() {
     return width;
@@ -58,18 +58,27 @@ public class FxPlotDrawer {
     return shiftY;
   }
 
-  public void drawPlot(String expression, GraphicsContext graphicsContext) throws IOException {
-    System.out.println(this.width + "x" + this.height);
-    for (int i = 0; i < this.width; i++) {
-      int x = i;
+  public void drawPlot(String expression, Color color, GraphicsContext graphicsContext) throws IOException {
+    FxSimpleDrawer drawer = new FxSimpleDrawer(graphicsContext);
 
-      ExpressionTree expressionTree = new ExpressionTree(expression);
-      // expressionTree.setVariableValue("x", x);
+    drawer.drawLineDDA(getShiftX(), 0, getShiftX(), getHeight(), Color.BLACK);
+    drawer.drawLineDDA(0, getShiftY(), getWidth(), getShiftY(), Color.BLACK);
 
-      int y = (int) expressionTree.evaluate();
-      System.out.println(x + " " + y);
-      FxSimpleDrawer drawer = new FxSimpleDrawer(graphicsContext);
-      drawer.drawPixel(x, y, Color.RED);
+    ExpressionTree expressionTree = new ExpressionTree(expression);
+    double x1 = 0;
+    expressionTree.setVariableValueIfAbsent("x", (x1 - getShiftX()) / scale);
+    double y1 = -expressionTree.evaluate() * scale + getShiftY();
+    double y2, x2;
+    for (int i = 1; i < getWidth(); i += 5) {
+      x2 = i;
+
+      expressionTree.setVariableValueIfAbsent("x", (x2 - getShiftX()) / scale);
+
+      y2 = -expressionTree.evaluate() * this.scale + getShiftY();
+      drawer.drawLineDDA((int) x1, (int) y1, (int) x2, (int) y2, color);
+      x1 = x2;
+      y1 = y2;
+
     }
   }
 }

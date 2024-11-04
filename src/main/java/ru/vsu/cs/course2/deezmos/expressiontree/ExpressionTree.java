@@ -27,6 +27,7 @@ import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncLn;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncNumber;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncSin;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncTg;
+import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncVariable;
 
 /**
  * EpressionTree
@@ -39,6 +40,7 @@ public class ExpressionTree {
 
   public ExpressionTree(String expression) throws IOException {
     tokens = tokenize(expression);
+    this.parse();
   }
 
   private List<Token> tokenize(String expression) throws IOException {
@@ -60,13 +62,20 @@ public class ExpressionTree {
   }
 
   public void setVariableValue(String variable, double value) throws IOException {
-    variable = variable.toLowerCase();
-
-    if (!hasVariable(variable)) {
+    if (!setVariableValueIfAbsent(variable, value)) {
       throw new IOException(String.format("No variable \"%s\" in current expression", variable));
     }
+  }
 
-    variableValues.put(variable, value);
+  public boolean setVariableValueIfAbsent(String variable, double value) {
+    variable = variable.toLowerCase();
+
+    if (hasVariable(variable)) {
+      this.variableValues.put(variable, value);
+      return true;
+    }
+
+    return false;
   }
 
   public boolean hasVariable(String variable) {
@@ -85,7 +94,7 @@ public class ExpressionTree {
         ETNode node = new ETNode(new FuncNumber(token.value()));
         nodeStack.push(node);
       } else if (token.type() == TokenType.VARIABLE) {
-        ETNode node = new ETNode(new FuncNumber(variableValues.get(token.value())));
+        ETNode node = new ETNode(new FuncVariable(token.value(), variableValues));
         nodeStack.push(node);
       } else {
         if (token.type() == TokenType.L_BRACKET) {
@@ -182,8 +191,10 @@ public class ExpressionTree {
     }
   }
 
+  /**
+   * .parse() before evaluation
+   */
   public double evaluate() throws IOException {
-    this.parse();
     return root.evaluate();
   }
 }

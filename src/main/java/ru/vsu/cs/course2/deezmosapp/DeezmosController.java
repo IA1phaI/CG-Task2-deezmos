@@ -14,7 +14,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import ru.vsu.cs.course2.deezmos.plotdrawer.Drawer;
+import ru.vsu.cs.course2.deezmos.plotdrawer.FxSimpleDrawer;
+import ru.vsu.cs.course2.deezmos.expressiontree.ExpressionTree;
+import ru.vsu.cs.course2.deezmos.plotdrawer.FxPlotDrawer;
 
 /** Deezmos controller for GUI. */
 public class DeezmosController {
@@ -69,16 +71,30 @@ public class DeezmosController {
     addInputField();
     addInputField();
     GraphicsContext gc = canvas.getGraphicsContext2D();
-    gc.setFill(Color.AQUA);
-    gc.fillOval(12, 12, 12, 12);
-    Drawer drawer = new Drawer(gc);
-    drawer.drawPixel(50, 50, Color.RED);
-    drawer.drawLineDDA(0, 0, 80, 200, Color.BLUE);
-    drawer.drawLineBresenham(10, 20, 200, 100, Color.CORAL);
-    drawer.drawLineBresenham(200, 100, 0, 0, Color.CYAN);
-    drawer.drawLineBresenhamFloat(100, 200, 50, 50, Color.DEEPPINK);
-    drawer.drawLineWu(6, 50, 900, 400, Color.DARKGREEN);
-    drawer.drawLineWu(400, 900, 50, 6, Color.CORAL);
+    // gc.setFill(Color.AQUA);
+    // gc.fillOval(12, 12, 12, 12);
+    // Drawer drawer = new Drawer(gc);
+    // drawer.drawPixel(50, 50, Color.RED);
+    // drawer.drawLineDDA(0, 0, 80, 200, Color.BLUE);
+    // drawer.drawLineBresenham(10, 20, 200, 100, Color.CORAL);
+    // drawer.drawLineBresenham(200, 100, 0, 0, Color.CYAN);
+    // drawer.drawLineBresenhamFloat(100, 200, 50, 50, Color.DEEPPINK);
+    // drawer.drawLineWu(6, 50, 900, 400, Color.DARKGREEN);
+    // drawer.drawLineWu(400, 900, 50, 6, Color.CORAL);
+
+    FxPlotDrawer plot = new FxPlotDrawer();
+    //plot.setScale(1);
+    plot.setSizes((int) canvas.heightProperty().get(), (int) canvas.widthProperty().get());
+    try {
+      plot.drawPlot("sinx", Color.RED, gc);
+      plot.drawPlot("3", Color.GREEN, gc);
+      plot.drawPlot("12x", Color.PURPLE, gc);
+      plot.drawPlot("x^2", Color.MAGENTA, gc);
+      plot.drawPlot("x^3", Color.CYAN, gc);
+      plot.drawPlot("1/x", Color.CORAL, gc);
+    } catch (Exception e) {
+      System.err.println(e.getMessage());
+    }
   }
 
 }
