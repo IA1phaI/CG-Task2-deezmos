@@ -8,17 +8,13 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import ru.vsu.cs.course2.deezmos.plotdrawer.FxSimpleDrawer;
-import ru.vsu.cs.course2.deezmos.expressiontree.ExpressionTree;
 import ru.vsu.cs.course2.deezmos.plotdrawer.FxPlotDrawer;
 
 /** Deezmos controller for GUI. */
@@ -95,6 +91,38 @@ public class DeezmosController {
         }
       }
     });
+
+    canvas.setOnKeyTyped(event -> {
+      try {
+        switch (event.getCharacter()) {
+          case "=" -> {
+            plotDrawer.rescale(1);
+            this.redraw();
+          }
+          case "-" -> {
+            plotDrawer.rescale(-1);
+            this.redraw();
+          }
+        }
+      } catch (Exception e) {
+        System.err.println(e.getMessage());
+      }
+    });
+
+    canvas.setOnScroll(event -> {
+      try {
+        double direction = event.getDeltaY();
+        if (direction > 0) {
+          plotDrawer.rescale(5);
+          redraw();
+        } else if (direction < 0) {
+          plotDrawer.rescale(-5);
+          redraw();
+        }
+      } catch (Exception e) {
+        System.err.println(e.getMessage());
+      }
+    });
     addInputField();
     addInputField();
     graphicsContext = canvas.getGraphicsContext2D();
@@ -129,14 +157,14 @@ public class DeezmosController {
     graphicsContext.setFill(Color.WHITE);
     graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-     plotDrawer.drawPlot("sinx", Color.RED, this.graphicsContext);
-     plotDrawer.drawPlot("3", Color.GREEN, this.graphicsContext);
-     plotDrawer.drawPlot("12 * x", Color.PURPLE, this.graphicsContext);
-     plotDrawer.drawPlot("x^2", Color.MAGENTA, this.graphicsContext);
-     plotDrawer.drawPlot("x^3", Color.CYAN, this.graphicsContext);
-     plotDrawer.drawPlot("1/x", Color.CORAL, this.graphicsContext);
-     plotDrawer.drawPlot("log 2 x", Color.YELLOW, this.graphicsContext);
-    plotDrawer.drawPlot("log x 2", Color.ORANGE, this.graphicsContext);
+    plotDrawer.drawPlot("sinx", Color.RED, this.graphicsContext);
+    plotDrawer.drawPlot("3", Color.GREEN, this.graphicsContext);
+    plotDrawer.drawPlot("12 * x", Color.PURPLE, this.graphicsContext);
+    plotDrawer.drawPlot("x^2", Color.MAGENTA, this.graphicsContext);
+    plotDrawer.drawPlot("x^3", Color.CYAN, this.graphicsContext);
+    plotDrawer.drawPlot("1/x", Color.CORAL, this.graphicsContext);
+    plotDrawer.drawPlot("log 2 x", Color.YELLOW, this.graphicsContext);
+    //plotDrawer.drawPlot("log x 2", Color.ORANGE, this.graphicsContext);
     plotDrawer.drawPlot("x * cos x", Color.BLUE, this.graphicsContext);
   }
 

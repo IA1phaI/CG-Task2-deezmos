@@ -63,6 +63,13 @@ public class FxPlotDrawer {
     shiftY += dy;
   }
 
+  public void rescale(double dScale) {
+    scale += dScale;
+    if (scale < 1) {
+      scale = 1;
+    }
+  }
+
   public void drawPlot(String expression, Color color, GraphicsContext graphicsContext) throws IOException {
     FxSimpleDrawer drawer = new FxSimpleDrawer(graphicsContext);
 
