@@ -129,14 +129,15 @@ public class DeezmosController {
     graphicsContext.setFill(Color.WHITE);
     graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-    // plotDrawer.drawPlot("sinx", Color.RED, this.graphicsContext);
-    // plotDrawer.drawPlot("3", Color.GREEN, this.graphicsContext);
-    // plotDrawer.drawPlot("12 * x", Color.PURPLE, this.graphicsContext);
-    // plotDrawer.drawPlot("x^2", Color.MAGENTA, this.graphicsContext);
-    // plotDrawer.drawPlot("x^3", Color.CYAN, this.graphicsContext);
-    // plotDrawer.drawPlot("1/x", Color.CORAL, this.graphicsContext);
-    // plotDrawer.drawPlot("log 2 x", Color.YELLOW, this.graphicsContext);
+     plotDrawer.drawPlot("sinx", Color.RED, this.graphicsContext);
+     plotDrawer.drawPlot("3", Color.GREEN, this.graphicsContext);
+     plotDrawer.drawPlot("12 * x", Color.PURPLE, this.graphicsContext);
+     plotDrawer.drawPlot("x^2", Color.MAGENTA, this.graphicsContext);
+     plotDrawer.drawPlot("x^3", Color.CYAN, this.graphicsContext);
+     plotDrawer.drawPlot("1/x", Color.CORAL, this.graphicsContext);
+     plotDrawer.drawPlot("log 2 x", Color.YELLOW, this.graphicsContext);
     plotDrawer.drawPlot("log x 2", Color.ORANGE, this.graphicsContext);
+    plotDrawer.drawPlot("x * cos x", Color.BLUE, this.graphicsContext);
   }
 
 }
