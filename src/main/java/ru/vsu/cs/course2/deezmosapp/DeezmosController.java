@@ -1,5 +1,6 @@
 package ru.vsu.cs.course2.deezmosapp;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -7,9 +8,11 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -42,6 +45,11 @@ public class DeezmosController {
   @FXML
   private VBox inputBox;
 
+  private int mouseX;
+  private int mouseY;
+  private FxPlotDrawer plotDrawer;
+  private GraphicsContext graphicsContext;
+
   private void addInputField() {
     HBox inputContainer = new HBox();
     inputContainer.setStyle("-fx-padding: 5");
@@ -64,13 +72,32 @@ public class DeezmosController {
   void initialize() {
     anchorPane.prefWidthProperty()
         .addListener((ov, oldValue, newValue) -> canvas.setWidth(newValue.doubleValue()));
-    anchorPane
-        .prefHeightProperty()
+    anchorPane.prefHeightProperty()
         .addListener((ov, oldValue, newValue) -> canvas.setHeight(newValue.doubleValue()));
 
+    canvas.setOnMouseMoved(event -> {
+      mouseX = (int) event.getX();
+      mouseY = (int) event.getY();
+    });
+
+    canvas.setOnMouseDragged(event -> {
+      switch (event.getButton()) {
+        case PRIMARY -> {
+          int newMouseX = (int) event.getX();
+          int newMouseY = (int) event.getY();
+          try {
+            translatePlot(newMouseX - mouseX, newMouseY - mouseY);
+          } catch (Exception e) {
+            System.err.println(e.getMessage());
+          }
+          mouseX = newMouseX;
+          mouseY = newMouseY;
+        }
+      }
+    });
     addInputField();
     addInputField();
-    GraphicsContext gc = canvas.getGraphicsContext2D();
+    graphicsContext = canvas.getGraphicsContext2D();
     // gc.setFill(Color.AQUA);
     // gc.fillOval(12, 12, 12, 12);
     // Drawer drawer = new Drawer(gc);
@@ -82,19 +109,34 @@ public class DeezmosController {
     // drawer.drawLineWu(6, 50, 900, 400, Color.DARKGREEN);
     // drawer.drawLineWu(400, 900, 50, 6, Color.CORAL);
 
-    FxPlotDrawer plot = new FxPlotDrawer();
-    //plot.setScale(1);
-    plot.setSizes((int) canvas.heightProperty().get(), (int) canvas.widthProperty().get());
+    plotDrawer = new FxPlotDrawer();
+    // plot.setScale(1);
+    plotDrawer.setSizes((int) canvas.heightProperty().get(), (int) canvas.widthProperty().get());
     try {
-      plot.drawPlot("sinx", Color.RED, gc);
-      plot.drawPlot("3", Color.GREEN, gc);
-      plot.drawPlot("12x", Color.PURPLE, gc);
-      plot.drawPlot("x^2", Color.MAGENTA, gc);
-      plot.drawPlot("x^3", Color.CYAN, gc);
-      plot.drawPlot("1/x", Color.CORAL, gc);
+      redraw();
     } catch (Exception e) {
       System.err.println(e.getMessage());
     }
+  }
+
+  private void translatePlot(int dx, int dy) throws IOException {
+    plotDrawer.translate(dx, dy);
+    redraw();
+
+  }
+
+  private void redraw() throws IOException {
+    graphicsContext.setFill(Color.WHITE);
+    graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+    // plotDrawer.drawPlot("sinx", Color.RED, this.graphicsContext);
+    // plotDrawer.drawPlot("3", Color.GREEN, this.graphicsContext);
+    // plotDrawer.drawPlot("12 * x", Color.PURPLE, this.graphicsContext);
+    // plotDrawer.drawPlot("x^2", Color.MAGENTA, this.graphicsContext);
+    // plotDrawer.drawPlot("x^3", Color.CYAN, this.graphicsContext);
+    // plotDrawer.drawPlot("1/x", Color.CORAL, this.graphicsContext);
+    // plotDrawer.drawPlot("log 2 x", Color.YELLOW, this.graphicsContext);
+    plotDrawer.drawPlot("log x 2", Color.ORANGE, this.graphicsContext);
   }
 
 }

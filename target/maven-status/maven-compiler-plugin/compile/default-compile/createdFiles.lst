@@ -13,6 +13,7 @@ ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncNumber.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncLg.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncTg.class
 ru/vsu/cs/course2/deezmos/expressiontree/ExpressionTree$1.class
+ru/vsu/cs/course2/deezmosapp/DeezmosController$1.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncActg.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncAtg.class
 ru/vsu/cs/course2/deezmos/plotdrawer/FxSimpleDrawer.class
