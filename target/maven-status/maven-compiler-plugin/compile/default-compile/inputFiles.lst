@@ -16,15 +16,15 @@
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expression/tree/unaryops/FuncCos.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expression/tree/unaryops/FuncAbs.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expression/tree/unaryops/FuncLg.java
+/home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/app/DeezmosController.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/module-info.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expression/tree/binaryops/FuncSubtract.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expression/tokenizer/ExpressionTokenizer.java
-/home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmosapp/DeezmosController.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expression/tree/unaryops/FuncSqrt.java
-/home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmosapp/DeezmosApplication.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expression/tokenizer/TokenType.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expression/tree/binaryops/FuncMultiply.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expression/tree/unaryops/FuncVariable.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/plotdrawer/FxSimpleDrawer.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expression/tree/Expression.java
+/home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/app/DeezmosApplication.java
 /home/a1pha/Education/University/Course_2-1/КГиГ/Homework/Task_2/src/main/java/ru/vsu/cs/course2/deezmos/expression/tree/unaryops/FuncSin.java

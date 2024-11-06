@@ -1,4 +1,4 @@
-package ru.vsu.cs.course2.deezmosapp;
+package ru.vsu.cs.course2.deezmos.app;
 
 import java.net.URL;
 import java.util.HashMap;
