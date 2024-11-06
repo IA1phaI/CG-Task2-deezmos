@@ -298,6 +298,7 @@ public class DeezmosController {
     button.textProperty().set("v");
     button.setOnAction(event -> {
       try {
+        removeVariablesOfExpressionHBox(constraintedHBox);
         Expression expression = new Expression(constraintedTextField.getText());
         expressionHBoxProperties.put(constraintedHBox,
             new ExpressionHBoxProperties(expression, constraintedColorPicker.getValue()));
@@ -325,27 +326,31 @@ public class DeezmosController {
     Button button = new Button();
     button.textProperty().set("x");
     button.setOnAction(event -> {
-      ExpressionHBoxProperties exprHBoxProp = expressionHBoxProperties
-          .get(constraintedHBox);
-      if (exprHBoxProp != null) {
-        Set<String> variables = exprHBoxProp.expression.getVariables();
-        for (String variable : variables) {
-          VariableProperties varPorperties = variableProppertiesMap.get(variable);
-          if (varPorperties == null) {
-            break;
-          }
-          varPorperties.count--;
-          if (varPorperties.count < 1) {
-            variableProppertiesMap.remove(variable);
-            variablesBox.getChildren().remove(varPorperties.hbox);
-          }
-        }
-      }
+      removeVariablesOfExpressionHBox(constraintedHBox);
       expressionHBoxProperties.remove(constraintedHBox);
       expressionsBox.getChildren().remove(constraintedHBox);
       redraw();
     });
 
     return button;
+  }
+
+  private void removeVariablesOfExpressionHBox(HBox constraintedHBox) {
+    ExpressionHBoxProperties exprHBoxProp = expressionHBoxProperties
+        .get(constraintedHBox);
+    if (exprHBoxProp != null) {
+      Set<String> variables = exprHBoxProp.expression.getVariables();
+      for (String variable : variables) {
+        VariableProperties varPorperties = variableProppertiesMap.get(variable);
+        if (varPorperties == null) {
+          break;
+        }
+        varPorperties.count--;
+        if (varPorperties.count < 1) {
+          variableProppertiesMap.remove(variable);
+          variablesBox.getChildren().remove(varPorperties.hbox);
+        }
+      }
+    }
   }
 }
