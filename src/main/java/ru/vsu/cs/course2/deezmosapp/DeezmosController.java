@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import ru.vsu.cs.course2.deezmos.plotdrawer.FxPlotDrawer;
@@ -30,17 +31,22 @@ public class DeezmosController {
   private AnchorPane anchorPane;
 
   @FXML
+  private Button buttonNewExpression;
+
+  @FXML
   private Canvas canvas;
+
+  @FXML
+  private AnchorPane canvasPane;
 
   @FXML
   private AnchorPane expressionsPane;
 
   @FXML
-  private Button buttonNewExpression;
-
-  @FXML
   private VBox inputBox;
 
+  @FXML
+  private VBox vboxNavigation;
   private int mouseX;
   private int mouseY;
   private FxPlotDrawer plotDrawer;
@@ -66,10 +72,14 @@ public class DeezmosController {
 
   @FXML
   void initialize() {
-    anchorPane.prefWidthProperty()
-        .addListener((ov, oldValue, newValue) -> canvas.setWidth(newValue.doubleValue()));
-    anchorPane.prefHeightProperty()
+    canvasPane.prefWidthProperty()
+        .addListener((ov, oldValue, newValue) -> {
+          canvas.setWidth(newValue.doubleValue());
+          System.out.println(newValue);
+        });
+    canvasPane.prefHeightProperty()
         .addListener((ov, oldValue, newValue) -> canvas.setHeight(newValue.doubleValue()));
+    System.out.println(canvasPane.widthProperty());
 
     canvas.setOnMouseMoved(event -> {
       mouseX = (int) event.getX();
@@ -123,23 +133,12 @@ public class DeezmosController {
         System.err.println(e.getMessage());
       }
     });
+
     addInputField();
     addInputField();
     graphicsContext = canvas.getGraphicsContext2D();
-    // gc.setFill(Color.AQUA);
-    // gc.fillOval(12, 12, 12, 12);
-    // Drawer drawer = new Drawer(gc);
-    // drawer.drawPixel(50, 50, Color.RED);
-    // drawer.drawLineDDA(0, 0, 80, 200, Color.BLUE);
-    // drawer.drawLineBresenham(10, 20, 200, 100, Color.CORAL);
-    // drawer.drawLineBresenham(200, 100, 0, 0, Color.CYAN);
-    // drawer.drawLineBresenhamFloat(100, 200, 50, 50, Color.DEEPPINK);
-    // drawer.drawLineWu(6, 50, 900, 400, Color.DARKGREEN);
-    // drawer.drawLineWu(400, 900, 50, 6, Color.CORAL);
+    plotDrawer = new FxPlotDrawer((int) canvas.heightProperty().get(), (int) canvas.widthProperty().get());
 
-    plotDrawer = new FxPlotDrawer();
-    // plot.setScale(1);
-    plotDrawer.setSizes((int) canvas.heightProperty().get(), (int) canvas.widthProperty().get());
     try {
       redraw();
     } catch (Exception e) {
@@ -150,22 +149,19 @@ public class DeezmosController {
   private void translatePlot(int dx, int dy) throws IOException {
     plotDrawer.translate(dx, dy);
     redraw();
-
   }
 
   private void redraw() throws IOException {
     graphicsContext.setFill(Color.WHITE);
     graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-    plotDrawer.drawPlot("sinx", Color.RED, this.graphicsContext);
-    plotDrawer.drawPlot("3", Color.GREEN, this.graphicsContext);
-    plotDrawer.drawPlot("12 * x", Color.PURPLE, this.graphicsContext);
-    plotDrawer.drawPlot("x^2", Color.MAGENTA, this.graphicsContext);
-    plotDrawer.drawPlot("x^3", Color.CYAN, this.graphicsContext);
-    plotDrawer.drawPlot("1/x", Color.CORAL, this.graphicsContext);
-    plotDrawer.drawPlot("log 2 x", Color.YELLOW, this.graphicsContext);
-    //plotDrawer.drawPlot("log x 2", Color.ORANGE, this.graphicsContext);
-    plotDrawer.drawPlot("x * cos x", Color.BLUE, this.graphicsContext);
+    plotDrawer.draw("sinx", Color.RED, this.graphicsContext);
+    plotDrawer.draw("3", Color.GREEN, this.graphicsContext);
+    plotDrawer.draw("12 * x", Color.PURPLE, this.graphicsContext);
+    plotDrawer.draw("x^2", Color.MAGENTA, this.graphicsContext);
+    plotDrawer.draw("x^3", Color.CYAN, this.graphicsContext);
+    plotDrawer.draw("1/x", Color.CORAL, this.graphicsContext);
+    plotDrawer.draw("log 2 x", Color.YELLOW, this.graphicsContext);
+    plotDrawer.draw("x * cos x", Color.BLUE, this.graphicsContext);
   }
-
 }

@@ -61,13 +61,13 @@ public class ExpressionTree {
     return tokens;
   }
 
-  public void setVariableValue(String variable, double value) throws IOException {
-    if (!setVariableValueIfAbsent(variable, value)) {
+  public void setVariable(String variable, double value) throws IOException {
+    if (!setVariableIfAbsent(variable, value)) {
       throw new IOException(String.format("No variable \"%s\" in current expression", variable));
     }
   }
 
-  public boolean setVariableValueIfAbsent(String variable, double value) {
+  public boolean setVariableIfAbsent(String variable, double value) {
     variable = variable.toLowerCase();
 
     if (hasVariable(variable)) {

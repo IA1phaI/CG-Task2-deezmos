@@ -16,7 +16,7 @@ public class DeezmosApplication extends Application {
   @Override
   public void start(Stage stage) throws IOException {
     FXMLLoader fxmlLoader = new FXMLLoader(DeezmosApplication.class.getResource("mainwindow.fxml"));
-    Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+    Scene scene = new Scene(fxmlLoader.load());
     System.out.println(fxmlLoader);
     stage.setTitle("DeezMos");
     stage.setScene(scene);
