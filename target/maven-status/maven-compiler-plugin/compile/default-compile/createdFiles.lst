@@ -1,3 +1,5 @@
+ru/vsu/cs/course2/deezmos/expressiontree/Expression.class
+ru/vsu/cs/course2/deezmosapp/DeezmosController$ExpressionHBoxProperties.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncAsin.class
 ru/vsu/cs/course2/deezmosapp/DeezmosApplication.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncAbs.class
@@ -12,8 +14,6 @@ ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncVariable.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncNumber.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncLg.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncTg.class
-ru/vsu/cs/course2/deezmosapp/DeezmosController$ExpressionContainerProperties.class
-ru/vsu/cs/course2/deezmos/expressiontree/ExpressionTree$1.class
 ru/vsu/cs/course2/deezmosapp/DeezmosController$1.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncActg.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncAtg.class
@@ -28,9 +28,9 @@ ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncAcos.class
 ru/vsu/cs/course2/deezmosapp/DeezmosController$VariableProperties.class
 ru/vsu/cs/course2/deezmos/TokenType$OperatorType.class
 ru/vsu/cs/course2/deezmos/ExpressionTokenizer$TokenPattern.class
+ru/vsu/cs/course2/deezmos/expressiontree/Expression$1.class
 ru/vsu/cs/course2/deezmosapp/DeezmosController.class
 ru/vsu/cs/course2/deezmos/expressiontree/binaryops/FuncMultiply.class
-ru/vsu/cs/course2/deezmos/expressiontree/ExpressionTree.class
 ru/vsu/cs/course2/deezmos/expressiontree/ETNode.class
 ru/vsu/cs/course2/deezmos/expressiontree/binaryops/FuncAdd.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncCos.class

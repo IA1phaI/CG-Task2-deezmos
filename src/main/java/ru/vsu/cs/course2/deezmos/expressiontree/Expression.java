@@ -35,13 +35,16 @@ import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncVariable;
 /**
  * EpressionTree
  */
-public class ExpressionTree {
+public class Expression {
 
   private ETNode root;
   List<Token> tokens;
   private HashMap<String, Double> variableValues;
 
-  public ExpressionTree(String expression) throws IOException {
+  public Expression(String expression) throws IOException {
+    if (expression.isBlank()) {
+      throw new IOException("Empty expression");
+    }
     variableValues = new HashMap<>();
     tokens = tokenize(expression);
     this.parse();

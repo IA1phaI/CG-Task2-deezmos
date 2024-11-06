@@ -1,7 +1,6 @@
 package ru.vsu.cs.course2.deezmosapp;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -20,7 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import ru.vsu.cs.course2.deezmos.expressiontree.ExpressionTree;
+import ru.vsu.cs.course2.deezmos.expressiontree.Expression;
 import ru.vsu.cs.course2.deezmos.plotdrawer.FxPlotDrawer;
 
 /** Deezmos controller for GUI. */
@@ -69,57 +68,26 @@ public class DeezmosController {
   HashMap<String, VariableProperties> variableProppertiesMap = new HashMap<>();
 
   private class VariableProperties {
-    private int count;
-    private HBox container;
+    public int count;
+    public HBox hbox;
 
-    public VariableProperties(int count, HBox container) {
+    public VariableProperties(int count, HBox hbox) {
       this.count = count;
-      this.container = container;
-    }
-
-    public void increaseCount() {
-      this.count++;
-    }
-
-    public void decreaseCount() {
-      this.count--;
-    }
-
-    public boolean isRedutantVariable() {
-      return count < 1;
-    }
-
-    public HBox getContainer() {
-      return container;
+      this.hbox = hbox;
     }
   }
 
-  /**
-   * ExpressionColor
-   */
-  private class ExpressionContainerProperties {
-    private ExpressionTree expressionTree;
-    private Color color;
+  private class ExpressionHBoxProperties {
+    Expression expression;
+    Color color;
 
-    public ExpressionContainerProperties(ExpressionTree expressionTree, Color color) {
-      this.expressionTree = expressionTree;
-      this.color = color;
-    }
-
-    public ExpressionTree getExpressionTree() {
-      return expressionTree;
-    }
-
-    public Color getColor() {
-      return color;
-    }
-
-    public void setColor(Color color) {
+    public ExpressionHBoxProperties(Expression expression, Color color) {
+      this.expression = expression;
       this.color = color;
     }
   }
 
-  private HashMap<HBox, ExpressionContainerProperties> expressionContainerPropertiesMap = new HashMap<>();
+  private HashMap<HBox, ExpressionHBoxProperties> expressionHBoxProperties = new HashMap<>();
 
   @FXML
   void initialize() {
@@ -212,8 +180,8 @@ public class DeezmosController {
 
       plotDrawer.drawAxes(this.graphicsContext);
 
-      for (ExpressionContainerProperties expressionWithColor : expressionContainerPropertiesMap.values()) {
-        plotDrawer.draw(expressionWithColor.getExpressionTree(), expressionWithColor.getColor(), graphicsContext);
+      for (ExpressionHBoxProperties exprHBoxProp : expressionHBoxProperties.values()) {
+        plotDrawer.draw(exprHBoxProp.expression, exprHBoxProp.color, graphicsContext);
       }
 
       // plotDrawer.draw("sinx", Color.RED, this.graphicsContext);
@@ -225,99 +193,42 @@ public class DeezmosController {
       // plotDrawer.draw("log 2 x", Color.YELLOW, this.graphicsContext);
       // plotDrawer.draw("x * cos x", Color.BLUE, this.graphicsContext);
     } catch (Exception e) {
-      System.err.println(e.getMessage());
+      e.printStackTrace(System.err);
     }
   }
 
   private void addExpressionField() {
-    HBox expressionContainer = new HBox();
-    expressionContainer.setStyle("-fx-padding: 5");
-    expressionContainer.setAlignment(Pos.CENTER);
+    HBox expressionHBox = constructSimpleHBox();
 
-    Label label = new Label();
-    label.setText("f(x) =");
-    label.setStyle("-fx-padding: 13");
-    label.setStyle("-fx-font-size: 18");
+    Label label = constructSimpleLabel("f(x) =");
 
     TextField textField = new TextField();
-    ColorPicker colorPicker = new ColorPicker();
-    colorPicker.setValue(Color.RED);
-    colorPicker.setOnAction(event -> {
-      ExpressionContainerProperties expressionWithColor = expressionContainerPropertiesMap.get(expressionContainer);
-      if (expressionWithColor != null) {
-        expressionWithColor.setColor(colorPicker.getValue());
-      }
-      redraw();
-    });
 
-    Button buttonAccept = new Button();
-    buttonAccept.textProperty().set("v");
-    buttonAccept.setOnAction(event -> {
-      try {
-        ExpressionTree expressionTree = new ExpressionTree(textField.textProperty().getValue());
-        expressionContainerPropertiesMap.put(expressionContainer,
-            new ExpressionContainerProperties(expressionTree, colorPicker.getValue()));
-        for (String variable : expressionTree.getVariables()) {
-          if (!variable.equals("x")) {
-            if (!variableProppertiesMap.containsKey(variable)) {
-              HBox variableContainer = addVariableField(variable);
-              variableProppertiesMap.put(variable,
-                  new VariableProperties(1, variableContainer));
-            } else {
-              variableProppertiesMap.get(variable).increaseCount();
-            }
-          }
-        }
-        redraw();
-      } catch (Exception e) {
-        System.err.println(e.getMessage());
-      }
-    });
+    ColorPicker colorPicker = constructColorPicker(expressionHBox);
 
-    Button buttonDel = new Button();
-    buttonDel.textProperty().set("x");
-    buttonDel.setOnAction(event -> {
-      ExpressionContainerProperties expressionWithColor = expressionContainerPropertiesMap.get(expressionContainer);
-      if (expressionWithColor != null) {
-        Set<String> variables = expressionWithColor.getExpressionTree().getVariables();
-        for (String variable : variables) {
-          VariableProperties varPorperties = variableProppertiesMap.get(variable);
-          if (varPorperties != null) {
-            varPorperties.decreaseCount();
-            if (varPorperties.isRedutantVariable()) {
-              variableProppertiesMap.remove(variable);
-              variablesBox.getChildren().remove(varPorperties.getContainer());
-            }
-          }
-        }
-      }
-      expressionContainerPropertiesMap.remove(expressionContainer);
-      expressionsBox.getChildren().remove(expressionContainer);
-      redraw();
-    });
+    Button buttonAccept = constructExpressionAcceptButton(
+        textField,
+        expressionHBox,
+        colorPicker);
 
-    expressionContainer.getChildren().add(label);
-    expressionContainer.getChildren().add(textField);
-    expressionContainer.getChildren().add(buttonAccept);
-    expressionContainer.getChildren().add(buttonDel);
-    expressionContainer.getChildren().add(colorPicker);
+    Button buttonDel = constructExpressionDelButton(expressionHBox);
 
-    expressionsBox.getChildren().add(expressionContainer);
+    expressionHBox.getChildren().add(label);
+    expressionHBox.getChildren().add(textField);
+    expressionHBox.getChildren().add(buttonAccept);
+    expressionHBox.getChildren().add(buttonDel);
+    expressionHBox.getChildren().add(colorPicker);
+
+    expressionsBox.getChildren().add(expressionHBox);
   }
 
   private HBox addVariableField(String variable) {
-    HBox container = new HBox();
-    container.setStyle("-fx-padding: 5");
-    container.setAlignment(Pos.CENTER);
+    HBox hbox = constructSimpleHBox();
 
-    Label label = new Label();
-
-    label.setText(variable + ":");
-    label.setStyle("-fx-padding: 13");
-    label.setStyle("-fx-font-size: 18");
+    Label label = constructSimpleLabel(variable + ":");
 
     TextField textField = new TextField();
-    Slider slider = new Slider();
+    Slider slider = constructSimpleSlider();
 
     textField.setText(String.valueOf(1));
     textField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -325,28 +236,116 @@ public class DeezmosController {
         double value = Double.parseDouble(newValue);
         setVariableValueInExpressions(variable, value);
         redraw();
-        return;
       }
     });
 
-    slider.setMax(10);
-    slider.setMin(-10);
-    slider.setValue(1);
     slider.valueProperty().addListener(event -> {
       textField.setText(String.format("%.2f", slider.getValue()));
     });
 
-    container.getChildren().add(label);
-    container.getChildren().add(slider);
-    container.getChildren().add(textField);
+    hbox.getChildren().add(label);
+    hbox.getChildren().add(slider);
+    hbox.getChildren().add(textField);
 
-    variablesBox.getChildren().add(container);
-    return container;
+    variablesBox.getChildren().add(hbox);
+    return hbox;
   }
 
   private void setVariableValueInExpressions(String variable, double value) {
-    for (ExpressionContainerProperties expressionWithColor : expressionContainerPropertiesMap.values()) {
-      expressionWithColor.getExpressionTree().setVariableIfAbsent(variable, value);
+    for (ExpressionHBoxProperties expressionWithColor : expressionHBoxProperties.values()) {
+      expressionWithColor.expression.setVariableIfAbsent(variable, value);
     }
+  }
+
+  private Label constructSimpleLabel(String text) {
+    Label label = new Label();
+    label.setText(text);
+    label.setStyle("-fx-padding: 13");
+    label.setStyle("-fx-font-size: 18");
+    return label;
+  }
+
+  private HBox constructSimpleHBox() {
+    HBox hbox = new HBox();
+    hbox.setStyle("-fx-padding: 5");
+    hbox.setAlignment(Pos.CENTER);
+    return hbox;
+  }
+
+  private Slider constructSimpleSlider() {
+    Slider slider = new Slider();
+    slider.setMax(10);
+    slider.setMin(-10);
+    slider.setValue(1);
+    return slider;
+  }
+
+  private ColorPicker constructColorPicker(HBox constraintedHBox) {
+    ColorPicker colorPicker = new ColorPicker(Color.RED);
+    colorPicker.setOnAction(event -> {
+      ExpressionHBoxProperties expressionWithColor = expressionHBoxProperties.get(constraintedHBox);
+      if (expressionWithColor != null) {
+        expressionWithColor.color = colorPicker.getValue();
+        redraw();
+      }
+    });
+    return colorPicker;
+  }
+
+  private Button constructExpressionAcceptButton(TextField constraintedTextField, HBox constraintedHBox,
+      ColorPicker constraintedColorPicker) {
+    Button button = new Button();
+    button.textProperty().set("v");
+    button.setOnAction(event -> {
+      try {
+        Expression expression = new Expression(constraintedTextField.getText());
+        expressionHBoxProperties.put(constraintedHBox,
+            new ExpressionHBoxProperties(expression, constraintedColorPicker.getValue()));
+        for (String variable : expression.getVariables()) {
+          if (variable.equals("x")) {
+            break;
+          }
+          if (!variableProppertiesMap.containsKey(variable)) {
+            HBox variableHBox = addVariableField(variable);
+            variableProppertiesMap.put(variable,
+                new VariableProperties(1, variableHBox));
+          } else {
+            variableProppertiesMap.get(variable).count++;
+          }
+        }
+        redraw();
+      } catch (Exception e) {
+        e.printStackTrace(System.err);
+      }
+    });
+    return button;
+  }
+
+  private Button constructExpressionDelButton(HBox constraintedHBox) {
+    Button button = new Button();
+    button.textProperty().set("x");
+    button.setOnAction(event -> {
+      ExpressionHBoxProperties exprHBoxProp = expressionHBoxProperties
+          .get(constraintedHBox);
+      if (exprHBoxProp != null) {
+        Set<String> variables = exprHBoxProp.expression.getVariables();
+        for (String variable : variables) {
+          VariableProperties varPorperties = variableProppertiesMap.get(variable);
+          if (varPorperties == null) {
+            break;
+          }
+          varPorperties.count--;
+          if (varPorperties.count < 1) {
+            variableProppertiesMap.remove(variable);
+            variablesBox.getChildren().remove(varPorperties.hbox);
+          }
+        }
+      }
+      expressionHBoxProperties.remove(constraintedHBox);
+      expressionsBox.getChildren().remove(constraintedHBox);
+      redraw();
+    });
+
+    return button;
   }
 }

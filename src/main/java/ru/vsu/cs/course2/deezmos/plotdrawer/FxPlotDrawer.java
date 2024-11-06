@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import ru.vsu.cs.course2.deezmos.expressiontree.ExpressionTree;
+import ru.vsu.cs.course2.deezmos.expressiontree.Expression;
 
 /**
  * FxPlotDrawer
@@ -96,10 +96,10 @@ public class FxPlotDrawer {
 
   public void draw(final String expression, final Color color, final GraphicsContext graphicsContext)
       throws IOException {
-    draw(new ExpressionTree(expression), color, graphicsContext);
+    draw(new Expression(expression), color, graphicsContext);
   }
 
-  public void draw(final ExpressionTree expressionTree, final Color color, final GraphicsContext graphicsContext)
+  public void draw(final Expression expression, final Color color, final GraphicsContext graphicsContext)
       throws IOException {
 
     final FxSimpleDrawer drawer = new FxSimpleDrawer(graphicsContext);
@@ -107,16 +107,16 @@ public class FxPlotDrawer {
     int x0 = 0;
     int x1 = 1;
 
-    expressionTree.setVariableIfAbsent("x", (x0 - getOffsetX()) / scale);
+    expression.setVariableIfAbsent("x", (x0 - getOffsetX()) / scale);
 
-    double y0 = -expressionTree.evaluate() * scale + getOffsetY();
+    double y0 = -expression.evaluate() * scale + getOffsetY();
     double y1;
 
     while (x1 < getWidth()) {
 
-      expressionTree.setVariableIfAbsent("x", (x1 - getOffsetX()) / scale);
+      expression.setVariableIfAbsent("x", (x1 - getOffsetX()) / scale);
 
-      y1 = -expressionTree.evaluate() * this.scale + getOffsetY();
+      y1 = -expression.evaluate() * this.scale + getOffsetY();
 
       if (isYOnScreen(y0) && isYOnScreen(y1)) {
         drawer.drawLineDDA(x0, (int) y0, x1, (int) y1, color);
