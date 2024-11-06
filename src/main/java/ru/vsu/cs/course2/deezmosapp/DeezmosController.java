@@ -52,7 +52,10 @@ public class DeezmosController {
   private AnchorPane expressionsPane;
 
   @FXML
-  private VBox inputBox;
+  private VBox expressionsBox;
+
+  @FXML
+  private VBox parametersBox;
 
   @FXML
   private VBox vboxNavigation;
@@ -87,55 +90,6 @@ public class DeezmosController {
   }
 
   private HashMap<HBox, ExpressionWithColor> expressions = new HashMap<>();
-
-  private void addInputField() {
-    HBox inputContainer = new HBox();
-    inputContainer.setStyle("-fx-padding: 5");
-    inputContainer.setAlignment(Pos.CENTER);
-
-    Label label = new Label();
-    label.setText("f(x) =");
-    label.setStyle("-fx-padding: 13");
-    label.setStyle("-fx-font-size: 18");
-
-    TextField textField = new TextField();
-    ColorPicker colorPicker = new ColorPicker();
-    colorPicker.setOnAction(event -> {
-      ExpressionWithColor expressionWithColor = expressions.get(inputContainer);
-      if (expressionWithColor != null) {
-        expressionWithColor.setColor(colorPicker.getValue());
-      }
-      redraw();
-    });
-
-    Button buttonAccept = new Button();
-    buttonAccept.textProperty().set("v");
-    buttonAccept.setOnAction(event -> {
-      try {
-        expressions.put(inputContainer,
-            new ExpressionWithColor(new ExpressionTree(textField.textProperty().getValue()), colorPicker.getValue()));
-        redraw();
-      } catch (Exception e) {
-        System.err.println(e.getMessage());
-      }
-    });
-
-    Button buttonDel = new Button();
-    buttonDel.textProperty().set("x");
-    buttonDel.setOnAction(event -> {
-      expressions.remove(inputContainer);
-      inputBox.getChildren().remove(inputContainer);
-      redraw();
-    });
-
-    inputContainer.getChildren().add(label);
-    inputContainer.getChildren().add(textField);
-    inputContainer.getChildren().add(buttonAccept);
-    inputContainer.getChildren().add(buttonDel);
-    inputContainer.getChildren().add(colorPicker);
-
-    inputBox.getChildren().add(inputContainer);
-  }
 
   @FXML
   void initialize() {
@@ -245,4 +199,55 @@ public class DeezmosController {
       System.err.println(e.getMessage());
     }
   }
+
+  private void addInputField() {
+    HBox inputContainer = new HBox();
+    inputContainer.setStyle("-fx-padding: 5");
+    inputContainer.setAlignment(Pos.CENTER);
+
+    Label label = new Label();
+    label.setText("f(x) =");
+    label.setStyle("-fx-padding: 13");
+    label.setStyle("-fx-font-size: 18");
+
+    TextField textField = new TextField();
+    ColorPicker colorPicker = new ColorPicker();
+    colorPicker.setValue(Color.RED);
+    colorPicker.setOnAction(event -> {
+      ExpressionWithColor expressionWithColor = expressions.get(inputContainer);
+      if (expressionWithColor != null) {
+        expressionWithColor.setColor(colorPicker.getValue());
+      }
+      redraw();
+    });
+
+    Button buttonAccept = new Button();
+    buttonAccept.textProperty().set("v");
+    buttonAccept.setOnAction(event -> {
+      try {
+        expressions.put(inputContainer,
+            new ExpressionWithColor(new ExpressionTree(textField.textProperty().getValue()), colorPicker.getValue()));
+        redraw();
+      } catch (Exception e) {
+        System.err.println(e.getMessage());
+      }
+    });
+
+    Button buttonDel = new Button();
+    buttonDel.textProperty().set("x");
+    buttonDel.setOnAction(event -> {
+      expressions.remove(inputContainer);
+      expressionsBox.getChildren().remove(inputContainer);
+      redraw();
+    });
+
+    inputContainer.getChildren().add(label);
+    inputContainer.getChildren().add(textField);
+    inputContainer.getChildren().add(buttonAccept);
+    inputContainer.getChildren().add(buttonDel);
+    inputContainer.getChildren().add(colorPicker);
+
+    expressionsBox.getChildren().add(inputContainer);
+  }
+
 }
