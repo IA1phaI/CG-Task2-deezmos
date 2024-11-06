@@ -19,7 +19,7 @@ public class FxPlotDrawer {
 
   private double scale = 50;
 
-  public FxPlotDrawer(int width, int height) {
+  public FxPlotDrawer(final int width, final int height) {
     setWidth(width);
     setHeight(height);
   }
@@ -28,12 +28,12 @@ public class FxPlotDrawer {
     return width;
   }
 
-  public void setWidth(int width) {
+  public void setWidth(final int width) {
     this.width = width;
     this.offsetX = width / 2;
   }
 
-  public void resize(int width, int height) {
+  public void resize(final int width, final int height) {
     setWidth(width);
     setHeight(height);
   }
@@ -42,7 +42,7 @@ public class FxPlotDrawer {
     return height;
   }
 
-  public void setHeight(int height) {
+  public void setHeight(final int height) {
     this.height = height;
     this.offsetY = height / 2;
   }
@@ -51,7 +51,7 @@ public class FxPlotDrawer {
     return scale;
   }
 
-  public void scale(double scale) {
+  public void scale(final double scale) {
     this.scale = scale;
   }
 
@@ -63,27 +63,27 @@ public class FxPlotDrawer {
     return offsetY;
   }
 
-  public void translate(int dx, int dy) {
+  public void translate(final int dx, final int dy) {
     offsetX += dx;
     offsetY += dy;
   }
 
-  public void rescale(double dScale) {
+  public void rescale(final double dScale) {
     scale += dScale;
     if (scale < 1) {
       scale = 1;
     }
   }
 
-  public void draw(String expression, Color color, GraphicsContext graphicsContext) throws IOException {
-    FxSimpleDrawer drawer = new FxSimpleDrawer(graphicsContext);
+  public void draw(final String expression, final Color color, final GraphicsContext graphicsContext) throws IOException {
+    final FxSimpleDrawer drawer = new FxSimpleDrawer(graphicsContext);
 
     drawer.drawLineDDA(offsetX(), 0, offsetX(), getHeight(), Color.BLACK);
     drawer.drawLineDDA(offsetX() + 1, 0, offsetX() + 1, getHeight(), Color.BLACK);
     drawer.drawLineDDA(0, offsetY(), getWidth(), offsetY(), Color.BLACK);
     drawer.drawLineDDA(0, offsetY() + 1, getWidth(), offsetY() + 1, Color.BLACK);
 
-    ExpressionTree expressionTree = new ExpressionTree(expression);
+    final ExpressionTree expressionTree = new ExpressionTree(expression);
 
     int x0 = 0;
     int x1 = 1;
@@ -117,19 +117,19 @@ public class FxPlotDrawer {
     }
   }
 
-  private boolean isYOnScreen(double y) {
+  private boolean isYOnScreen(final double y) {
     return y > 0
         && y < this.getHeight();
   }
 
-  private boolean hasBorderBetween(double y0, double y1) {
+  private boolean hasBorderBetween(final double y0, final double y1) {
     return (y0 < 0 && y1 > 0)
         || (y0 > 0 && y1 < 0)
         || (y0 < this.getHeight() && y1 > this.getHeight())
         || (y0 > this.getHeight() && y1 < this.getHeight());
   }
 
-  private int roundYCoordinateToScreen(double y) {
+  private int roundYCoordinateToScreen(final double y) {
     if (y < 0) {
       return 0;
     } else if (y > this.getHeight()) {
