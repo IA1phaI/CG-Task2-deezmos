@@ -1,9 +1,9 @@
-package ru.vsu.cs.course2.deezmos.expressiontree.unaryops;
+package ru.vsu.cs.course2.deezmos.expression.tree.unaryops;
 
 import java.util.HashMap;
 
-import ru.vsu.cs.course2.deezmos.expressiontree.ETNode;
-import ru.vsu.cs.course2.deezmos.expressiontree.Evaluator;
+import ru.vsu.cs.course2.deezmos.expression.tree.ETNode;
+import ru.vsu.cs.course2.deezmos.expression.tree.Evaluator;
 
 /**
  * FuncVariable

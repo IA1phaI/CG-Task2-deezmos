@@ -1,4 +1,4 @@
-package ru.vsu.cs.course2.deezmos;
+package ru.vsu.cs.course2.deezmos.expression.tokenizer;
 
 /** Tokens of equation. */
 public enum TokenType {

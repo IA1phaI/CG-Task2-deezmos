@@ -1,4 +1,4 @@
-package ru.vsu.cs.course2.deezmos.expressiontree;
+package ru.vsu.cs.course2.deezmos.expression.tree;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -7,30 +7,30 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
-import ru.vsu.cs.course2.deezmos.ExpressionTokenizer;
-import ru.vsu.cs.course2.deezmos.ExpressionTokenizer.Token;
-import ru.vsu.cs.course2.deezmos.TokenType;
-import ru.vsu.cs.course2.deezmos.TokenType.OperatorType;
-import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncAdd;
-import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncDivide;
-import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncLog;
-import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncMultiply;
-import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncPow;
-import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncSubtract;
-import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncAbs;
-import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncAcos;
-import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncActg;
-import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncAsin;
-import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncAtg;
-import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncCos;
-import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncCtg;
-import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncLg;
-import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncLn;
-import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncNumber;
-import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncSin;
-import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncSqrt;
-import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncTg;
-import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncVariable;
+import ru.vsu.cs.course2.deezmos.expression.tokenizer.ExpressionTokenizer;
+import ru.vsu.cs.course2.deezmos.expression.tokenizer.TokenType;
+import ru.vsu.cs.course2.deezmos.expression.tokenizer.ExpressionTokenizer.Token;
+import ru.vsu.cs.course2.deezmos.expression.tokenizer.TokenType.OperatorType;
+import ru.vsu.cs.course2.deezmos.expression.tree.binaryops.FuncAdd;
+import ru.vsu.cs.course2.deezmos.expression.tree.binaryops.FuncDivide;
+import ru.vsu.cs.course2.deezmos.expression.tree.binaryops.FuncLog;
+import ru.vsu.cs.course2.deezmos.expression.tree.binaryops.FuncMultiply;
+import ru.vsu.cs.course2.deezmos.expression.tree.binaryops.FuncPow;
+import ru.vsu.cs.course2.deezmos.expression.tree.binaryops.FuncSubtract;
+import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncAbs;
+import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncAcos;
+import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncActg;
+import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncAsin;
+import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncAtg;
+import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncCos;
+import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncCtg;
+import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncLg;
+import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncLn;
+import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncNumber;
+import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncSin;
+import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncSqrt;
+import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncTg;
+import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncVariable;
 
 /**
  * EpressionTree

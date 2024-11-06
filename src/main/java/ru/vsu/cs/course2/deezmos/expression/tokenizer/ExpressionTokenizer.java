@@ -1,4 +1,4 @@
-package ru.vsu.cs.course2.deezmos;
+package ru.vsu.cs.course2.deezmos.expression.tokenizer;
 
 import java.io.IOException;
 import java.util.LinkedList;

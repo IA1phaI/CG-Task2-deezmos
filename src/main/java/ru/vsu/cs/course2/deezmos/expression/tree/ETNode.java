@@ -1,4 +1,4 @@
-package ru.vsu.cs.course2.deezmos.expressiontree;
+package ru.vsu.cs.course2.deezmos.expression.tree;
 
 /**
  * ETreeNode

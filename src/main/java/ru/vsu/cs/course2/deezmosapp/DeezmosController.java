@@ -19,7 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import ru.vsu.cs.course2.deezmos.expressiontree.Expression;
+import ru.vsu.cs.course2.deezmos.expression.tree.Expression;
 import ru.vsu.cs.course2.deezmos.plotdrawer.FxPlotDrawer;
 
 /** Deezmos controller for GUI. */

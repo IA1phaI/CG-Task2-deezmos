@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import ru.vsu.cs.course2.deezmos.expressiontree.Expression;
+import ru.vsu.cs.course2.deezmos.expression.tree.Expression;
 
 /**
  * FxPlotDrawer
