@@ -51,6 +51,8 @@ public class ExpressionTokenizer {
             new TokenPattern(Pattern.compile("ln"), TokenType.LN),
             new TokenPattern(Pattern.compile("lg"), TokenType.LG),
             new TokenPattern(Pattern.compile("sqrt"), TokenType.SQRT),
+            new TokenPattern(Pattern.compile("e"), TokenType.EULER_CONST),
+            new TokenPattern(Pattern.compile("pi"), TokenType.PI_CONST),
             new TokenPattern(Pattern.compile("[a-zA-Z]+"), TokenType.VARIABLE)));
   }
 

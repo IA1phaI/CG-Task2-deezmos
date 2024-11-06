@@ -5,6 +5,8 @@ public enum TokenType {
   SPACE,
   NUMBER,
   VARIABLE,
+  EULER_CONST,
+  PI_CONST,
   L_BRACKET,
   R_BRACKET,
   LINE,

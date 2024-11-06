@@ -107,6 +107,12 @@ public class Expression {
       if (token.type() == TokenType.NUMBER) {
         ETNode node = new ETNode(new FuncNumber(token.value()));
         nodeStack.push(node);
+      } else if (token.type() == TokenType.PI_CONST) {
+        ETNode node = new ETNode(new FuncNumber(Math.PI));
+        nodeStack.push(node);
+      } else if (token.type() == TokenType.EULER_CONST) {
+        ETNode node = new ETNode(new FuncNumber(Math.E));
+        nodeStack.push(node);
       } else if (token.type() == TokenType.VARIABLE) {
         ETNode node = new ETNode(new FuncVariable(token.value(), variableValues));
         nodeStack.push(node);
