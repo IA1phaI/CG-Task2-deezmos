@@ -33,3 +33,4 @@ ru/vsu/cs/course2/deezmos/expressiontree/ExpressionTree.class
 ru/vsu/cs/course2/deezmos/expressiontree/ETNode.class
 ru/vsu/cs/course2/deezmos/expressiontree/binaryops/FuncAdd.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncCos.class
+ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncSqrt.class

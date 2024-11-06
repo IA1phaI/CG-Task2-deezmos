@@ -26,6 +26,7 @@ public enum TokenType {
   ACTG,
   LN,
   LG,
+  SQRT,
   EOL;
 
   public enum OperatorType {
@@ -56,7 +57,7 @@ public enum TokenType {
       case PLUS, MINUS, MULT, DIVISION, POW, LOG -> {
         return OperatorType.BINARY_OPERATOR;
       }
-      case ABS, SIN, COS, TG, CTG, ASIN, ACOS, ATG, ACTG, LN, LG -> {
+      case ABS, SIN, COS, TG, CTG, ASIN, ACOS, ATG, ACTG, LN, LG, SQRT -> {
         return OperatorType.UNARY_OPERATOR;
       }
       default -> {

@@ -26,6 +26,7 @@ import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncLg;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncLn;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncNumber;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncSin;
+import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncSqrt;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncTg;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncVariable;
 
@@ -184,6 +185,9 @@ public class ExpressionTree {
       }
       case LG -> {
         return new FuncLg();
+      }
+      case SQRT -> {
+        return new FuncSqrt();
       }
       default -> {
         throw new RuntimeException(String.format("Unsupported operator %s", tokenType));

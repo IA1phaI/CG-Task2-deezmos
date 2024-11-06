@@ -50,6 +50,7 @@ public class ExpressionTokenizer {
             new TokenPattern(Pattern.compile("actg"), TokenType.ACTG),
             new TokenPattern(Pattern.compile("ln"), TokenType.LN),
             new TokenPattern(Pattern.compile("lg"), TokenType.LG),
+            new TokenPattern(Pattern.compile("sqrt"), TokenType.SQRT),
             new TokenPattern(Pattern.compile("[a-zA-Z]+"), TokenType.VARIABLE)));
   }
 
