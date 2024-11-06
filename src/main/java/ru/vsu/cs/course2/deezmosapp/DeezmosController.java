@@ -97,11 +97,11 @@ public class DeezmosController {
   /**
    * ExpressionColor
    */
-  private class ExpressionWithColor {
+  private class ExpressionContainerProperties {
     private ExpressionTree expressionTree;
     private Color color;
 
-    public ExpressionWithColor(ExpressionTree expressionTree, Color color) {
+    public ExpressionContainerProperties(ExpressionTree expressionTree, Color color) {
       this.expressionTree = expressionTree;
       this.color = color;
     }
@@ -119,7 +119,7 @@ public class DeezmosController {
     }
   }
 
-  private HashMap<HBox, ExpressionWithColor> containersWithExpressions = new HashMap<>();
+  private HashMap<HBox, ExpressionContainerProperties> expressionContainerPropertiesMap = new HashMap<>();
 
   @FXML
   void initialize() {
@@ -169,16 +169,14 @@ public class DeezmosController {
       if (direction > 0) {
         plotDrawer.rescale(5);
         resize();
-        redraw();
       } else if (direction < 0) {
         plotDrawer.rescale(-5);
         resize();
-        redraw();
       }
     });
 
     buttonNewExpression.setOnAction(event -> {
-      addInputField();
+      addExpressionField();
     });
 
     buttonCenterize.setOnAction(event -> {
@@ -214,7 +212,7 @@ public class DeezmosController {
 
       plotDrawer.drawAxes(this.graphicsContext);
 
-      for (ExpressionWithColor expressionWithColor : containersWithExpressions.values()) {
+      for (ExpressionContainerProperties expressionWithColor : expressionContainerPropertiesMap.values()) {
         plotDrawer.draw(expressionWithColor.getExpressionTree(), expressionWithColor.getColor(), graphicsContext);
       }
 
@@ -231,10 +229,10 @@ public class DeezmosController {
     }
   }
 
-  private void addInputField() {
-    HBox container = new HBox();
-    container.setStyle("-fx-padding: 5");
-    container.setAlignment(Pos.CENTER);
+  private void addExpressionField() {
+    HBox expressionContainer = new HBox();
+    expressionContainer.setStyle("-fx-padding: 5");
+    expressionContainer.setAlignment(Pos.CENTER);
 
     Label label = new Label();
     label.setText("f(x) =");
@@ -245,7 +243,7 @@ public class DeezmosController {
     ColorPicker colorPicker = new ColorPicker();
     colorPicker.setValue(Color.RED);
     colorPicker.setOnAction(event -> {
-      ExpressionWithColor expressionWithColor = containersWithExpressions.get(container);
+      ExpressionContainerProperties expressionWithColor = expressionContainerPropertiesMap.get(expressionContainer);
       if (expressionWithColor != null) {
         expressionWithColor.setColor(colorPicker.getValue());
       }
@@ -257,8 +255,8 @@ public class DeezmosController {
     buttonAccept.setOnAction(event -> {
       try {
         ExpressionTree expressionTree = new ExpressionTree(textField.textProperty().getValue());
-        containersWithExpressions.put(container,
-            new ExpressionWithColor(expressionTree, colorPicker.getValue()));
+        expressionContainerPropertiesMap.put(expressionContainer,
+            new ExpressionContainerProperties(expressionTree, colorPicker.getValue()));
         for (String variable : expressionTree.getVariables()) {
           if (!variable.equals("x")) {
             if (!variableProppertiesMap.containsKey(variable)) {
@@ -279,30 +277,32 @@ public class DeezmosController {
     Button buttonDel = new Button();
     buttonDel.textProperty().set("x");
     buttonDel.setOnAction(event -> {
-      ExpressionWithColor expressionWithColor = containersWithExpressions.get(container);
+      ExpressionContainerProperties expressionWithColor = expressionContainerPropertiesMap.get(expressionContainer);
       if (expressionWithColor != null) {
         Set<String> variables = expressionWithColor.getExpressionTree().getVariables();
         for (String variable : variables) {
           VariableProperties varPorperties = variableProppertiesMap.get(variable);
-          varPorperties.decreaseCount();
-          if (varPorperties.isRedutantVariable()) {
-            variableProppertiesMap.remove(variable);
-            variablesBox.getChildren().remove(varPorperties.getContainer());
+          if (varPorperties != null) {
+            varPorperties.decreaseCount();
+            if (varPorperties.isRedutantVariable()) {
+              variableProppertiesMap.remove(variable);
+              variablesBox.getChildren().remove(varPorperties.getContainer());
+            }
           }
         }
       }
-      containersWithExpressions.remove(container);
-      expressionsBox.getChildren().remove(container);
+      expressionContainerPropertiesMap.remove(expressionContainer);
+      expressionsBox.getChildren().remove(expressionContainer);
       redraw();
     });
 
-    container.getChildren().add(label);
-    container.getChildren().add(textField);
-    container.getChildren().add(buttonAccept);
-    container.getChildren().add(buttonDel);
-    container.getChildren().add(colorPicker);
+    expressionContainer.getChildren().add(label);
+    expressionContainer.getChildren().add(textField);
+    expressionContainer.getChildren().add(buttonAccept);
+    expressionContainer.getChildren().add(buttonDel);
+    expressionContainer.getChildren().add(colorPicker);
 
-    expressionsBox.getChildren().add(container);
+    expressionsBox.getChildren().add(expressionContainer);
   }
 
   private HBox addVariableField(String variable) {
@@ -345,7 +345,7 @@ public class DeezmosController {
   }
 
   private void setVariableValueInExpressions(String variable, double value) {
-    for (ExpressionWithColor expressionWithColor : containersWithExpressions.values()) {
+    for (ExpressionContainerProperties expressionWithColor : expressionContainerPropertiesMap.values()) {
       expressionWithColor.getExpressionTree().setVariableIfAbsent(variable, value);
     }
   }

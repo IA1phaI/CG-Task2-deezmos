@@ -1,4 +1,3 @@
-ru/vsu/cs/course2/deezmosapp/DeezmosController$ExpressionWithColor.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncAsin.class
 ru/vsu/cs/course2/deezmosapp/DeezmosApplication.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncAbs.class
@@ -13,6 +12,7 @@ ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncVariable.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncNumber.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncLg.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncTg.class
+ru/vsu/cs/course2/deezmosapp/DeezmosController$ExpressionContainerProperties.class
 ru/vsu/cs/course2/deezmos/expressiontree/ExpressionTree$1.class
 ru/vsu/cs/course2/deezmosapp/DeezmosController$1.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncActg.class
