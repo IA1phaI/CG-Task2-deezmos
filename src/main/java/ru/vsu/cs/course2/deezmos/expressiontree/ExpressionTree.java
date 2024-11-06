@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 
 import ru.vsu.cs.course2.deezmos.ExpressionTokenizer;
@@ -41,14 +42,22 @@ public class ExpressionTree {
   private HashMap<String, Double> variableValues;
 
   public ExpressionTree(String expression) throws IOException {
+    variableValues = new HashMap<>();
     tokens = tokenize(expression);
     this.parse();
+  }
+
+  public Set<String> getVariables() {
+    return variableValues.keySet();
+  }
+
+  public double getVariableValue(String variable) {
+    return variableValues.get(variable);
   }
 
   private List<Token> tokenize(String expression) throws IOException {
     ExpressionTokenizer tokenizer = new ExpressionTokenizer(expression);
     LinkedList<Token> tokens = new LinkedList<>();
-    variableValues = new HashMap<>();
 
     while (tokenizer.hasNext()) {
       Token token = tokenizer.next();

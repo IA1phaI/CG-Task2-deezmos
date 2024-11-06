@@ -25,6 +25,7 @@ ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncCtg.class
 ru/vsu/cs/course2/deezmos/ExpressionTokenizer.class
 ru/vsu/cs/course2/deezmos/ExpressionTokenizer$Token.class
 ru/vsu/cs/course2/deezmos/expressiontree/unaryops/FuncAcos.class
+ru/vsu/cs/course2/deezmosapp/DeezmosController$VariableProperties.class
 ru/vsu/cs/course2/deezmos/TokenType$OperatorType.class
 ru/vsu/cs/course2/deezmos/ExpressionTokenizer$TokenPattern.class
 ru/vsu/cs/course2/deezmosapp/DeezmosController.class

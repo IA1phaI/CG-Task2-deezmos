@@ -127,7 +127,7 @@
                                     </AnchorPane>
                                 </content>
                               </ScrollPane>
-                              <ScrollPane fx:id="paramsPane" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0">
+                              <ScrollPane fx:id="variablesPane" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="500.0">
                                        <children>
@@ -140,7 +140,7 @@
                                                             <Font size="24.0" />
                                                          </font>
                                                       </Label>
-                                                      <VBox fx:id="parametersBox" />
+                                                      <VBox fx:id="variablesBox" />
                                                    </children>
                                                 </VBox>
                                              </children>
