@@ -42,10 +42,11 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 
-<AnchorPane minHeight="600.0" minWidth="800.0" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vsu.cs.course2.deezmosapp.DeezmosController">
+<AnchorPane fx:id="anchorPane" minHeight="600.0" minWidth="800.0" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vsu.cs.course2.deezmosapp.DeezmosController">
    <children>
       <VBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
@@ -88,13 +89,13 @@
               </Menu>
             </menus>
           </MenuBar>
-          <AnchorPane fx:id="anchorPane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="848.0" prefWidth="1568.0" VBox.vgrow="ALWAYS">
+          <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="848.0" prefWidth="1568.0" VBox.vgrow="ALWAYS">
             <children>
                   <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <ScrollPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="400.0">
+                        <ScrollPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="500.0">
                           <content>
-                            <AnchorPane fx:id="expressionsPane" maxWidth="-Infinity" prefWidth="400.0">
+                            <AnchorPane fx:id="expressionsPane" maxWidth="-Infinity" prefWidth="500.0">
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </padding>
@@ -113,11 +114,13 @@
                               </AnchorPane>
                           </content>
                         </ScrollPane>
-                        <AnchorPane fx:id="canvasPane">
+                        <Pane fx:id="canvasPane">
                            <children>
-                              <Canvas fx:id="canvas" height="873.0" width="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Canvas fx:id="canvas" height="873.0" width="1200.0" />
+                              <Button fx:id="buttonCenterize" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Center" />
+                              <Button fx:id="buttonDefaultScale" layoutX="89.0" layoutY="14.0" mnemonicParsing="false" text="Default Scale" />
                            </children>
-                        </AnchorPane>
+                        </Pane>
                      </children>
                   </HBox>
             </children>

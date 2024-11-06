@@ -17,11 +17,15 @@ public class FxPlotDrawer {
   private int offsetX;
   private int offsetY;
 
-  private double scale = 50;
+  private int DEFAULT_SCALE = 50;
+  private double scale;
 
   public FxPlotDrawer(final int width, final int height) {
     setWidth(width);
     setHeight(height);
+    this.offsetX = getDefaultOffsetX();
+    this.offsetY = getDefaultOffsetY();
+    this.scale = DEFAULT_SCALE;
   }
 
   public int getWidth() {
@@ -30,7 +34,6 @@ public class FxPlotDrawer {
 
   public void setWidth(final int width) {
     this.width = width;
-    this.offsetX = width / 2;
   }
 
   public void resize(final int width, final int height) {
@@ -44,14 +47,13 @@ public class FxPlotDrawer {
 
   public void setHeight(final int height) {
     this.height = height;
-    this.offsetY = height / 2;
   }
 
   public double getScale() {
     return scale;
   }
 
-  public void scale(final double scale) {
+  public void setScale(final double scale) {
     this.scale = scale;
   }
 
@@ -68,11 +70,28 @@ public class FxPlotDrawer {
     offsetY += dy;
   }
 
+  public int getDefaultOffsetX() {
+    return this.width / 2;
+  }
+
+  public int getDefaultOffsetY() {
+    return this.height / 2;
+  }
+
+  public void setDefaultOffset() {
+    this.offsetX = getDefaultOffsetX();
+    this.offsetY = getDefaultOffsetY();
+  }
+
   public void rescale(final double dScale) {
     scale += dScale;
     if (scale < 1) {
       scale = 1;
     }
+  }
+
+  public void setDefaultScale() {
+    this.scale = DEFAULT_SCALE;
   }
 
   public void draw(final String expression, final Color color, final GraphicsContext graphicsContext)
@@ -82,7 +101,6 @@ public class FxPlotDrawer {
 
   public void draw(final ExpressionTree expressionTree, final Color color, final GraphicsContext graphicsContext)
       throws IOException {
-    this.drawAxes(graphicsContext);
 
     final FxSimpleDrawer drawer = new FxSimpleDrawer(graphicsContext);
 
@@ -118,7 +136,7 @@ public class FxPlotDrawer {
     }
   }
 
-  private void drawAxes(GraphicsContext graphicsContext) {
+  public void drawAxes(GraphicsContext graphicsContext) {
     FxSimpleDrawer drawer = new FxSimpleDrawer(graphicsContext);
     drawer.drawLineDDA(getOffsetX(), 0, getOffsetX(), getHeight(), Color.BLACK);
     drawer.drawLineDDA(getOffsetX() + 1, 0, getOffsetX() + 1, getHeight(), Color.BLACK);
