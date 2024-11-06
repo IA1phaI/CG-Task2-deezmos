@@ -73,13 +73,9 @@ public class DeezmosController {
   @FXML
   void initialize() {
     canvasPane.prefWidthProperty()
-        .addListener((ov, oldValue, newValue) -> {
-          canvas.setWidth(newValue.doubleValue());
-          System.out.println(newValue);
-        });
+        .addListener((ov, oldValue, newValue) -> canvas.setWidth(newValue.doubleValue()));
     canvasPane.prefHeightProperty()
         .addListener((ov, oldValue, newValue) -> canvas.setHeight(newValue.doubleValue()));
-    System.out.println(canvasPane.widthProperty());
 
     canvas.setOnMouseMoved(event -> {
       mouseX = (int) event.getX();
@@ -91,11 +87,7 @@ public class DeezmosController {
         case PRIMARY -> {
           int newMouseX = (int) event.getX();
           int newMouseY = (int) event.getY();
-          try {
-            translatePlot(newMouseX - mouseX, newMouseY - mouseY);
-          } catch (Exception e) {
-            System.err.println(e.getMessage());
-          }
+          translatePlot(newMouseX - mouseX, newMouseY - mouseY);
           mouseX = newMouseX;
           mouseY = newMouseY;
         }
@@ -103,34 +95,28 @@ public class DeezmosController {
     });
 
     canvas.setOnKeyTyped(event -> {
-      try {
-        switch (event.getCharacter()) {
-          case "=" -> {
-            plotDrawer.rescale(1);
-            this.redraw();
-          }
-          case "-" -> {
-            plotDrawer.rescale(-1);
-            this.redraw();
-          }
+      switch (event.getCharacter()) {
+        case "=" -> {
+          plotDrawer.rescale(1);
+          this.redraw();
         }
-      } catch (Exception e) {
-        System.err.println(e.getMessage());
+        case "-" -> {
+          plotDrawer.rescale(-1);
+          this.redraw();
+        }
       }
     });
 
     canvas.setOnScroll(event -> {
-      try {
-        double direction = event.getDeltaY();
-        if (direction > 0) {
-          plotDrawer.rescale(5);
-          redraw();
-        } else if (direction < 0) {
-          plotDrawer.rescale(-5);
-          redraw();
-        }
-      } catch (Exception e) {
-        System.err.println(e.getMessage());
+      double direction = event.getDeltaY();
+      if (direction > 0) {
+        plotDrawer.rescale(5);
+        resize();
+        redraw();
+      } else if (direction < 0) {
+        plotDrawer.rescale(-5);
+        resize();
+        redraw();
       }
     });
 
@@ -139,29 +125,35 @@ public class DeezmosController {
     graphicsContext = canvas.getGraphicsContext2D();
     plotDrawer = new FxPlotDrawer((int) canvas.heightProperty().get(), (int) canvas.widthProperty().get());
 
-    try {
-      redraw();
-    } catch (Exception e) {
-      System.err.println(e.getMessage());
-    }
+    redraw();
   }
 
-  private void translatePlot(int dx, int dy) throws IOException {
+  private void translatePlot(int dx, int dy) {
     plotDrawer.translate(dx, dy);
     redraw();
   }
 
-  private void redraw() throws IOException {
-    graphicsContext.setFill(Color.WHITE);
-    graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+  private void resize() {
+    canvas.setWidth(canvasPane.getWidth());
+    canvas.setHeight(canvasPane.getWidth());
+    plotDrawer.resize((int) canvasPane.getWidth(), (int) canvasPane.getHeight());
+  }
 
-    plotDrawer.draw("sinx", Color.RED, this.graphicsContext);
-    plotDrawer.draw("3", Color.GREEN, this.graphicsContext);
-    plotDrawer.draw("12 * x", Color.PURPLE, this.graphicsContext);
-    plotDrawer.draw("x^2", Color.MAGENTA, this.graphicsContext);
-    plotDrawer.draw("x^3", Color.CYAN, this.graphicsContext);
-    plotDrawer.draw("1/x", Color.CORAL, this.graphicsContext);
-    plotDrawer.draw("log 2 x", Color.YELLOW, this.graphicsContext);
-    plotDrawer.draw("x * cos x", Color.BLUE, this.graphicsContext);
+  private void redraw() {
+    try {
+      graphicsContext.setFill(Color.WHITE);
+      graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+      plotDrawer.draw("sinx", Color.RED, this.graphicsContext);
+      plotDrawer.draw("3", Color.GREEN, this.graphicsContext);
+      plotDrawer.draw("12 * x", Color.PURPLE, this.graphicsContext);
+      plotDrawer.draw("x^2", Color.MAGENTA, this.graphicsContext);
+      plotDrawer.draw("x^3", Color.CYAN, this.graphicsContext);
+      plotDrawer.draw("1/x", Color.CORAL, this.graphicsContext);
+      plotDrawer.draw("log 2 x", Color.YELLOW, this.graphicsContext);
+      plotDrawer.draw("x * cos x", Color.BLUE, this.graphicsContext);
+    } catch (Exception e) {
+      System.err.println(e.getMessage());
+    }
   }
 }

@@ -55,11 +55,11 @@ public class FxPlotDrawer {
     this.scale = scale;
   }
 
-  public int offsetX() {
+  public int getOffsetX() {
     return offsetX;
   }
 
-  public int offsetY() {
+  public int getOffsetY() {
     return offsetY;
   }
 
@@ -75,29 +75,30 @@ public class FxPlotDrawer {
     }
   }
 
-  public void draw(final String expression, final Color color, final GraphicsContext graphicsContext) throws IOException {
+  public void draw(final String expression, final Color color, final GraphicsContext graphicsContext)
+      throws IOException {
+    draw(new ExpressionTree(expression), color, graphicsContext);
+  }
+
+  public void draw(final ExpressionTree expressionTree, final Color color, final GraphicsContext graphicsContext)
+      throws IOException {
+    this.drawAxes(graphicsContext);
+
     final FxSimpleDrawer drawer = new FxSimpleDrawer(graphicsContext);
-
-    drawer.drawLineDDA(offsetX(), 0, offsetX(), getHeight(), Color.BLACK);
-    drawer.drawLineDDA(offsetX() + 1, 0, offsetX() + 1, getHeight(), Color.BLACK);
-    drawer.drawLineDDA(0, offsetY(), getWidth(), offsetY(), Color.BLACK);
-    drawer.drawLineDDA(0, offsetY() + 1, getWidth(), offsetY() + 1, Color.BLACK);
-
-    final ExpressionTree expressionTree = new ExpressionTree(expression);
 
     int x0 = 0;
     int x1 = 1;
 
-    expressionTree.setVariableIfAbsent("x", (x0 - offsetX()) / scale);
+    expressionTree.setVariableIfAbsent("x", (x0 - getOffsetX()) / scale);
 
-    double y0 = -expressionTree.evaluate() * scale + offsetY();
+    double y0 = -expressionTree.evaluate() * scale + getOffsetY();
     double y1;
 
     while (x1 < getWidth()) {
 
-      expressionTree.setVariableIfAbsent("x", (x1 - offsetX()) / scale);
+      expressionTree.setVariableIfAbsent("x", (x1 - getOffsetX()) / scale);
 
-      y1 = -expressionTree.evaluate() * this.scale + offsetY();
+      y1 = -expressionTree.evaluate() * this.scale + getOffsetY();
 
       if (isYOnScreen(y0) && isYOnScreen(y1)) {
         drawer.drawLineDDA(x0, (int) y0, x1, (int) y1, color);
@@ -115,6 +116,14 @@ public class FxPlotDrawer {
 
       x1++;
     }
+  }
+
+  private void drawAxes(GraphicsContext graphicsContext) {
+    FxSimpleDrawer drawer = new FxSimpleDrawer(graphicsContext);
+    drawer.drawLineDDA(getOffsetX(), 0, getOffsetX(), getHeight(), Color.BLACK);
+    drawer.drawLineDDA(getOffsetX() + 1, 0, getOffsetX() + 1, getHeight(), Color.BLACK);
+    drawer.drawLineDDA(0, getOffsetY(), getWidth(), getOffsetY(), Color.BLACK);
+    drawer.drawLineDDA(0, getOffsetY() + 1, getWidth(), getOffsetY() + 1, Color.BLACK);
   }
 
   private boolean isYOnScreen(final double y) {
