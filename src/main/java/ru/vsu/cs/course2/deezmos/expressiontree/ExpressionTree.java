@@ -16,6 +16,7 @@ import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncLog;
 import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncMultiply;
 import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncPow;
 import ru.vsu.cs.course2.deezmos.expressiontree.binaryops.FuncSubtract;
+import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncAbs;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncAcos;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncActg;
 import ru.vsu.cs.course2.deezmos.expressiontree.unaryops.FuncAsin;
@@ -154,7 +155,7 @@ public class ExpressionTree {
         return new FuncLog();
       }
       case ABS -> {
-        return new FuncSin();
+        return new FuncAbs();
       }
       case SIN -> {
         return new FuncSin();
