@@ -119,9 +119,9 @@ public class FxPlotDrawer {
       y1 = -expression.evaluate() * this.scale + getOffsetY();
 
       if (isYOnScreen(y0) && isYOnScreen(y1)) {
-        drawer.drawLineDDA(x0, (int) y0, x1, (int) y1, color);
+        drawer.drawLineBresenham(x0, (int) y0, x1, (int) y1, color);
       } else if (hasBorderBetween(y0, y1) && Double.isFinite(y0) && Double.isFinite(y1)) {
-        drawer.drawLineDDA(
+        drawer.drawLineBresenham(
             x0,
             this.roundYCoordinateToScreen(y0),
             x1,

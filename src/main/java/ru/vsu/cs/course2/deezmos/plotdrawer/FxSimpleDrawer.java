@@ -68,7 +68,7 @@ public class FxSimpleDrawer {
     }
   }
 
-  public void drawLineBresenhamFloatLow(int x0, int y0, int x1, int y1, Color color) {
+  private void drawLineBresenhamFloatLow(int x0, int y0, int x1, int y1, Color color) {
     int deltaX = Math.abs(x1 - x0);
     int deltaY = Math.abs(y1 - y0);
     int y = y0;
@@ -95,7 +95,7 @@ public class FxSimpleDrawer {
     }
   }
 
-  public void drawLineBresenhamFloatHigh(int x0, int y0, int x1, int y1, Color color) {
+  private void drawLineBresenhamFloatHigh(int x0, int y0, int x1, int y1, Color color) {
     int deltaX = Math.abs(x1 - x0);
     int deltaY = Math.abs(y1 - y0);
     int x = x0;
