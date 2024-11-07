@@ -139,9 +139,20 @@ public class FxPlotDrawer {
   public void drawAxes(GraphicsContext graphicsContext) {
     FxSimpleDrawer drawer = new FxSimpleDrawer(graphicsContext);
     drawer.drawLineDDA(getOffsetX(), 0, getOffsetX(), getHeight(), Color.BLACK);
-    drawer.drawLineDDA(getOffsetX() + 1, 0, getOffsetX() + 1, getHeight(), Color.BLACK);
+    drawer.drawLineDDA(getOffsetX() + 1, 0, getOffsetX() + 1, getHeight(), Color.GRAY);
+    drawer.drawLineDDA(getOffsetX() - 1, 0, getOffsetX() - 1, getHeight(), Color.GRAY);
     drawer.drawLineDDA(0, getOffsetY(), getWidth(), getOffsetY(), Color.BLACK);
-    drawer.drawLineDDA(0, getOffsetY() + 1, getWidth(), getOffsetY() + 1, Color.BLACK);
+    drawer.drawLineDDA(0, getOffsetY() + 1, getWidth(), getOffsetY() + 1, Color.GRAY);
+    drawer.drawLineDDA(0, getOffsetY() - 1, getWidth(), getOffsetY() - 1, Color.GRAY);
+
+    drawer.drawPixel(getOffsetX() + 1, getOffsetY() + 1, Color.BLACK);
+    drawer.drawPixel(getOffsetX() + 1, getOffsetY(), Color.BLACK);
+    drawer.drawPixel(getOffsetX(), getOffsetY() + 1, Color.BLACK);
+    drawer.drawPixel(getOffsetX() - 1, getOffsetY() - 1, Color.BLACK);
+    drawer.drawPixel(getOffsetX() - 1, getOffsetY(), Color.BLACK);
+    drawer.drawPixel(getOffsetX(), getOffsetY() - 1, Color.BLACK);
+    drawer.drawPixel(getOffsetX() + 1, getOffsetY() - 1, Color.BLACK);
+    drawer.drawPixel(getOffsetX() - 1, getOffsetY() + 1, Color.BLACK);
   }
 
   private boolean isYOnScreen(final double y) {
