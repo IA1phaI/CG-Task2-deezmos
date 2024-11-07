@@ -198,20 +198,20 @@ public class DeezmosController {
   }
 
   private void addExpressionField() {
-    HBox expressionHBox = constructSimpleHBox();
+    HBox expressionHBox = makeHBox();
 
-    Label label = constructSimpleLabel("f(x) =");
+    Label label = makeLabel("f(x) =");
 
     TextField textField = new TextField();
 
-    ColorPicker colorPicker = constructColorPicker(expressionHBox);
+    ColorPicker colorPicker = makeColorPicker(expressionHBox);
 
-    Button buttonAccept = constructExpressionAcceptButton(
+    Button buttonAccept = makeExpressionAcceptButton(
         textField,
         expressionHBox,
         colorPicker);
 
-    Button buttonDel = constructExpressionDelButton(expressionHBox);
+    Button buttonDel = makeExpressionDelButton(expressionHBox);
 
     expressionHBox.getChildren().add(label);
     expressionHBox.getChildren().add(textField);
@@ -223,12 +223,12 @@ public class DeezmosController {
   }
 
   private HBox addVariableField(String variable) {
-    HBox hbox = constructSimpleHBox();
+    HBox hbox = makeHBox();
 
-    Label label = constructSimpleLabel(variable + ":");
+    Label label = makeLabel(variable + ":");
 
     TextField textField = new TextField();
-    Slider slider = constructSimpleSlider();
+    Slider slider = makeVariableSlider();
 
     textField.setText(String.valueOf(1));
     textField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -257,7 +257,7 @@ public class DeezmosController {
     }
   }
 
-  private Label constructSimpleLabel(String text) {
+  private Label makeLabel(String text) {
     Label label = new Label();
     label.setText(text);
     label.setStyle("-fx-padding: 13");
@@ -265,14 +265,14 @@ public class DeezmosController {
     return label;
   }
 
-  private HBox constructSimpleHBox() {
+  private HBox makeHBox() {
     HBox hbox = new HBox();
     hbox.setStyle("-fx-padding: 5");
     hbox.setAlignment(Pos.CENTER);
     return hbox;
   }
 
-  private Slider constructSimpleSlider() {
+  private Slider makeVariableSlider() {
     Slider slider = new Slider();
     slider.setMax(10);
     slider.setMin(-10);
@@ -280,10 +280,10 @@ public class DeezmosController {
     return slider;
   }
 
-  private ColorPicker constructColorPicker(HBox constraintedHBox) {
+  private ColorPicker makeColorPicker(HBox linkedHBox) {
     ColorPicker colorPicker = new ColorPicker(Color.RED);
     colorPicker.setOnAction(event -> {
-      ExpressionHBoxProperties expressionWithColor = expressionHBoxProperties.get(constraintedHBox);
+      ExpressionHBoxProperties expressionWithColor = expressionHBoxProperties.get(linkedHBox);
       if (expressionWithColor != null) {
         expressionWithColor.color = colorPicker.getValue();
         redraw();
@@ -292,16 +292,16 @@ public class DeezmosController {
     return colorPicker;
   }
 
-  private Button constructExpressionAcceptButton(TextField constraintedTextField, HBox constraintedHBox,
-      ColorPicker constraintedColorPicker) {
+  private Button makeExpressionAcceptButton(TextField linkedTextField, HBox linkedHBox,
+      ColorPicker linkedColorPicker) {
     Button button = new Button();
     button.textProperty().set("v");
     button.setOnAction(event -> {
       try {
-        removeVariablesOfExpressionHBox(constraintedHBox);
-        Expression expression = new Expression(constraintedTextField.getText());
-        expressionHBoxProperties.put(constraintedHBox,
-            new ExpressionHBoxProperties(expression, constraintedColorPicker.getValue()));
+        removeVariablesOfExpressionHBox(linkedHBox);
+        Expression expression = new Expression(linkedTextField.getText());
+        expressionHBoxProperties.put(linkedHBox,
+            new ExpressionHBoxProperties(expression, linkedColorPicker.getValue()));
         for (String variable : expression.getVariables()) {
           if (variable.equals("x")) {
             break;
@@ -322,22 +322,22 @@ public class DeezmosController {
     return button;
   }
 
-  private Button constructExpressionDelButton(HBox constraintedHBox) {
+  private Button makeExpressionDelButton(HBox linkedHBox) {
     Button button = new Button();
     button.textProperty().set("x");
     button.setOnAction(event -> {
-      removeVariablesOfExpressionHBox(constraintedHBox);
-      expressionHBoxProperties.remove(constraintedHBox);
-      expressionsBox.getChildren().remove(constraintedHBox);
+      removeVariablesOfExpressionHBox(linkedHBox);
+      expressionHBoxProperties.remove(linkedHBox);
+      expressionsBox.getChildren().remove(linkedHBox);
       redraw();
     });
 
     return button;
   }
 
-  private void removeVariablesOfExpressionHBox(HBox constraintedHBox) {
+  private void removeVariablesOfExpressionHBox(HBox linkedHBox) {
     ExpressionHBoxProperties exprHBoxProp = expressionHBoxProperties
-        .get(constraintedHBox);
+        .get(linkedHBox);
     if (exprHBoxProp != null) {
       Set<String> variables = exprHBoxProp.expression.getVariables();
       for (String variable : variables) {
