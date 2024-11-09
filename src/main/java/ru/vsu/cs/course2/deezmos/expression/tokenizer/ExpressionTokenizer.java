@@ -48,7 +48,7 @@ public class ExpressionTokenizer {
             new TokenPattern(Pattern.compile("sqrt"), TokenType.SQRT),
             new TokenPattern(Pattern.compile("e"), TokenType.EULER_CONST),
             new TokenPattern(Pattern.compile("pi"), TokenType.PI_CONST),
-            new TokenPattern(Pattern.compile("[a-zA-Z]+"), TokenType.POSITIVE_VARIABLE),
+            new TokenPattern(Pattern.compile("[a-zA-Z]+"), TokenType.VARIABLE),
             new TokenPattern(Pattern.compile("\\-[a-zA-Z]+"), TokenType.NEGATIVE_VARIABLE),
             new TokenPattern(Pattern.compile("\\+"), TokenType.PLUS),
             new TokenPattern(Pattern.compile("\\-"), TokenType.MINUS),

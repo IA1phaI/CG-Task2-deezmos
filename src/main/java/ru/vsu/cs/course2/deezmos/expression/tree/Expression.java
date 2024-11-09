@@ -26,12 +26,11 @@ import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncCos;
 import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncCtg;
 import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncLg;
 import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncLn;
-import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncNegativeVariable;
 import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncNumber;
 import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncSin;
 import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncSqrt;
 import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncTg;
-import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncPositiveVariable;
+import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncVariable;
 
 /**
  * EpressionTree
@@ -66,9 +65,16 @@ public class Expression {
     while (tokenizer.hasNext()) {
       Token token = tokenizer.next();
 
-      if (token.type() == TokenType.POSITIVE_VARIABLE
-          || token.type() == TokenType.NEGATIVE_VARIABLE) {
+      if (token.type() == TokenType.VARIABLE) {
         variableValues.put(token.value(), 1.0);
+      }
+
+      if (token.type() == TokenType.NEGATIVE_VARIABLE) {
+        variableValues.putIfAbsent(token.value(), 1.0);
+        tokens.add(new Token("-1", TokenType.NUMBER));
+        tokens.add(new Token("*", TokenType.MULT));
+        tokens.add(new Token(token.value(), TokenType.VARIABLE));
+        continue;
       }
 
       tokens.add(token);
@@ -115,11 +121,8 @@ public class Expression {
       } else if (token.type() == TokenType.EULER_CONST) {
         ETNode node = new ETNode(new FuncNumber(Math.E));
         nodeStack.push(node);
-      } else if (token.type() == TokenType.POSITIVE_VARIABLE) {
-        ETNode node = new ETNode(new FuncPositiveVariable(token.value(), variableValues));
-        nodeStack.push(node);
-      } else if (token.type() == TokenType.NEGATIVE_VARIABLE) {
-        ETNode node = new ETNode(new FuncNegativeVariable(token.value(), variableValues));
+      } else if (token.type() == TokenType.VARIABLE) {
+        ETNode node = new ETNode(new FuncVariable(token.value(), variableValues));
         nodeStack.push(node);
       } else {
         if (token.type() == TokenType.L_BRACKET) {

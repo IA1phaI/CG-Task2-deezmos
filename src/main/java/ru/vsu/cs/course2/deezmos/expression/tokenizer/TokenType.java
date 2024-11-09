@@ -4,7 +4,7 @@ package ru.vsu.cs.course2.deezmos.expression.tokenizer;
 public enum TokenType {
   SPACE,
   NUMBER,
-  POSITIVE_VARIABLE,
+  VARIABLE,
   NEGATIVE_VARIABLE,
   EULER_CONST,
   PI_CONST,
