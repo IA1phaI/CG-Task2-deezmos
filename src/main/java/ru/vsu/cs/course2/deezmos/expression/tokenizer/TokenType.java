@@ -8,6 +8,7 @@ public enum TokenType {
   NEGATIVE_VARIABLE,
   EULER_CONST,
   PI_CONST,
+  NEGATIVE_L_BRACKET,
   L_BRACKET,
   R_BRACKET,
   LINE,

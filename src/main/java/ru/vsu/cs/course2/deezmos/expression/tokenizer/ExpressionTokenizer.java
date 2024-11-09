@@ -28,8 +28,9 @@ public class ExpressionTokenizer {
     tokenPatterns = new LinkedList<>(
         List.of(
             new TokenPattern(Pattern.compile("\\s+"), TokenType.SPACE),
-            new TokenPattern(Pattern.compile("-?\\d+(?:\\.\\d+)?"), TokenType.NUMBER),
+            new TokenPattern(Pattern.compile("\\-?\\d+(?:\\.\\d+)?"), TokenType.NUMBER),
             new TokenPattern(Pattern.compile("\\("), TokenType.L_BRACKET),
+            new TokenPattern(Pattern.compile("\\-\\("), TokenType.NEGATIVE_L_BRACKET),
             new TokenPattern(Pattern.compile("\\)"), TokenType.R_BRACKET),
             new TokenPattern(Pattern.compile("\\|"), TokenType.LINE),
             new TokenPattern(Pattern.compile(","), TokenType.COMMA),

@@ -77,6 +77,12 @@ public class Expression {
         continue;
       }
 
+      if (token.type() == TokenType.NEGATIVE_L_BRACKET) {
+        tokens.add(new Token("-1", TokenType.NUMBER));
+        tokens.add(new Token("*", TokenType.MULT));
+        tokens.add(new Token(token.value(), TokenType.L_BRACKET));
+        continue;
+      }
       tokens.add(token);
     }
 
