@@ -26,11 +26,12 @@ import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncCos;
 import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncCtg;
 import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncLg;
 import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncLn;
+import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncNegativeVariable;
 import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncNumber;
 import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncSin;
 import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncSqrt;
 import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncTg;
-import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncVariable;
+import ru.vsu.cs.course2.deezmos.expression.tree.unaryops.FuncPositiveVariable;
 
 /**
  * EpressionTree
@@ -65,7 +66,8 @@ public class Expression {
     while (tokenizer.hasNext()) {
       Token token = tokenizer.next();
 
-      if (token.type() == TokenType.VARIABLE) {
+      if (token.type() == TokenType.POSITIVE_VARIABLE
+          || token.type() == TokenType.NEGATIVE_VARIABLE) {
         variableValues.put(token.value(), 1.0);
       }
 
@@ -113,8 +115,11 @@ public class Expression {
       } else if (token.type() == TokenType.EULER_CONST) {
         ETNode node = new ETNode(new FuncNumber(Math.E));
         nodeStack.push(node);
-      } else if (token.type() == TokenType.VARIABLE) {
-        ETNode node = new ETNode(new FuncVariable(token.value(), variableValues));
+      } else if (token.type() == TokenType.POSITIVE_VARIABLE) {
+        ETNode node = new ETNode(new FuncPositiveVariable(token.value(), variableValues));
+        nodeStack.push(node);
+      } else if (token.type() == TokenType.NEGATIVE_VARIABLE) {
+        ETNode node = new ETNode(new FuncNegativeVariable(token.value(), variableValues));
         nodeStack.push(node);
       } else {
         if (token.type() == TokenType.L_BRACKET) {

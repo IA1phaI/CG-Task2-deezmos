@@ -182,16 +182,17 @@ public class DeezmosController {
 
       for (ExpressionHBoxProperties exprHBoxProp : expressionHBoxProperties.values()) {
         plotDrawer.draw(exprHBoxProp.expression, exprHBoxProp.color, graphicsContext);
+        System.out.println(exprHBoxProp.expression.getVariables());
       }
 
-       plotDrawer.draw("sinx", Color.RED, this.graphicsContext);
-       plotDrawer.draw("3", Color.GREEN, this.graphicsContext);
-       plotDrawer.draw("12 * x", Color.PURPLE, this.graphicsContext);
-       plotDrawer.draw("x^2", Color.MAGENTA, this.graphicsContext);
-       plotDrawer.draw("x^3", Color.CYAN, this.graphicsContext);
-       plotDrawer.draw("1/x", Color.CORAL, this.graphicsContext);
-       plotDrawer.draw("log 2 x", Color.YELLOW, this.graphicsContext);
-       plotDrawer.draw("x * cos x", Color.BLUE, this.graphicsContext);
+       //plotDrawer.draw("sinx", Color.RED, this.graphicsContext);
+       //plotDrawer.draw("3", Color.GREEN, this.graphicsContext);
+       //plotDrawer.draw("12 * x", Color.PURPLE, this.graphicsContext);
+       //plotDrawer.draw("x^2", Color.MAGENTA, this.graphicsContext);
+       //plotDrawer.draw("x^3", Color.CYAN, this.graphicsContext);
+       //plotDrawer.draw("1/x", Color.CORAL, this.graphicsContext);
+       //plotDrawer.draw("log 2 x", Color.YELLOW, this.graphicsContext);
+       //plotDrawer.draw("x * cos x", Color.BLUE, this.graphicsContext);
     } catch (Exception e) {
       e.printStackTrace(System.err);
     }
@@ -304,7 +305,7 @@ public class DeezmosController {
             new ExpressionHBoxProperties(expression, linkedColorPicker.getValue()));
         for (String variable : expression.getVariables()) {
           if (variable.equals("x")) {
-            break;
+            continue;
           }
           if (!variableProppertiesMap.containsKey(variable)) {
             HBox variableHBox = addVariableField(variable);

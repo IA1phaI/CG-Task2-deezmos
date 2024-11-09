@@ -8,18 +8,26 @@ import ru.vsu.cs.course2.deezmos.expression.tree.Evaluator;
 /**
  * FuncVariable
  */
-public class FuncVariable implements Evaluator {
+public class FuncPositiveVariable implements Evaluator {
 
   private String variable;
   private HashMap<String, Double> variables;
 
-  public FuncVariable(String variable, HashMap<String, Double> variables) {
+  public FuncPositiveVariable(String variable, HashMap<String, Double> variables) {
     this.variable = variable;
     this.variables = variables;
   }
 
+  protected HashMap<String, Double> getVariables() {
+    return variables;
+  }
+
+  protected String getVariable() {
+    return variable;
+  }
+
   @Override
   public double evaluate(ETNode left, ETNode right) {
-    return variables.get(variable);
+    return getVariables().get(getVariable());
   }
 }

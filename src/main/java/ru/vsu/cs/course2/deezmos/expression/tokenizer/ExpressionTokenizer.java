@@ -33,12 +33,6 @@ public class ExpressionTokenizer {
             new TokenPattern(Pattern.compile("\\)"), TokenType.R_BRACKET),
             new TokenPattern(Pattern.compile("\\|"), TokenType.LINE),
             new TokenPattern(Pattern.compile(","), TokenType.COMMA),
-            new TokenPattern(Pattern.compile("\\+"), TokenType.PLUS),
-            new TokenPattern(Pattern.compile("\\-"), TokenType.MINUS),
-            new TokenPattern(Pattern.compile("\\*"), TokenType.MULT),
-            new TokenPattern(Pattern.compile("\\^"), TokenType.POW),
-            new TokenPattern(Pattern.compile("\\/"), TokenType.DIVISION),
-            new TokenPattern(Pattern.compile("log"), TokenType.LOG),
             new TokenPattern(Pattern.compile("abs"), TokenType.ABS),
             new TokenPattern(Pattern.compile("sin"), TokenType.SIN),
             new TokenPattern(Pattern.compile("cos"), TokenType.COS),
@@ -50,10 +44,17 @@ public class ExpressionTokenizer {
             new TokenPattern(Pattern.compile("actg"), TokenType.ACTG),
             new TokenPattern(Pattern.compile("ln"), TokenType.LN),
             new TokenPattern(Pattern.compile("lg"), TokenType.LG),
+            new TokenPattern(Pattern.compile("log"), TokenType.LOG),
             new TokenPattern(Pattern.compile("sqrt"), TokenType.SQRT),
             new TokenPattern(Pattern.compile("e"), TokenType.EULER_CONST),
             new TokenPattern(Pattern.compile("pi"), TokenType.PI_CONST),
-            new TokenPattern(Pattern.compile("[a-zA-Z]+"), TokenType.VARIABLE)));
+            new TokenPattern(Pattern.compile("[a-zA-Z]+"), TokenType.POSITIVE_VARIABLE),
+            new TokenPattern(Pattern.compile("\\-[a-zA-Z]+"), TokenType.NEGATIVE_VARIABLE),
+            new TokenPattern(Pattern.compile("\\+"), TokenType.PLUS),
+            new TokenPattern(Pattern.compile("\\-"), TokenType.MINUS),
+            new TokenPattern(Pattern.compile("\\*"), TokenType.MULT),
+            new TokenPattern(Pattern.compile("\\^"), TokenType.POW),
+            new TokenPattern(Pattern.compile("\\/"), TokenType.DIVISION)));
   }
 
   public ExpressionTokenizer(String string) {
@@ -83,6 +84,10 @@ public class ExpressionTokenizer {
 
       if (tokenPattern.type() == TokenType.SPACE || tokenPattern.type() == TokenType.COMMA) {
         return this.next();
+      }
+
+      if (tokenPattern.type() == TokenType.NEGATIVE_VARIABLE) {
+        return new Token(string.substring(matcher.start() + 1, matcher.end()), tokenPattern.type());
       }
 
       return new Token(string.substring(matcher.start(), matcher.end()), tokenPattern.type());

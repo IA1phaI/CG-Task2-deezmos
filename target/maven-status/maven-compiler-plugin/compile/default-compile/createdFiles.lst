@@ -10,7 +10,6 @@ ru/vsu/cs/course2/deezmos/expression/tree/unaryops/FuncActg.class
 module-info.class
 ru/vsu/cs/course2/deezmos/expression/tokenizer/ExpressionTokenizer$TokenPattern.class
 ru/vsu/cs/course2/deezmos/expression/tokenizer/TokenType.class
-ru/vsu/cs/course2/deezmos/expression/tree/unaryops/FuncVariable.class
 ru/vsu/cs/course2/deezmos/app/DeezmosController$VariableProperties.class
 ru/vsu/cs/course2/deezmos/app/DeezmosController$ExpressionHBoxProperties.class
 ru/vsu/cs/course2/deezmos/expression/tree/binaryops/FuncSubtract.class
@@ -23,10 +22,12 @@ ru/vsu/cs/course2/deezmos/expression/tree/binaryops/FuncLog.class
 ru/vsu/cs/course2/deezmos/expression/tree/unaryops/FuncCos.class
 ru/vsu/cs/course2/deezmos/expression/tokenizer/TokenType$OperatorType.class
 ru/vsu/cs/course2/deezmos/expression/tree/unaryops/FuncAtg.class
+ru/vsu/cs/course2/deezmos/expression/tree/unaryops/FuncPositiveVariable.class
 ru/vsu/cs/course2/deezmos/expression/tree/unaryops/FuncSqrt.class
 ru/vsu/cs/course2/deezmos/expression/tree/unaryops/FuncAsin.class
 ru/vsu/cs/course2/deezmos/expression/tree/unaryops/FuncLn.class
 ru/vsu/cs/course2/deezmos/expression/tree/unaryops/FuncSin.class
+ru/vsu/cs/course2/deezmos/expression/tree/unaryops/FuncNegativeVariable.class
 ru/vsu/cs/course2/deezmos/expression/tokenizer/ExpressionTokenizer$Token.class
 ru/vsu/cs/course2/deezmos/expression/tree/unaryops/FuncLg.class
 ru/vsu/cs/course2/deezmos/expression/tree/Expression.class
