@@ -120,7 +120,11 @@ public class FxPlotDrawer {
 
       if (isYOnScreen(y0) && isYOnScreen(y1)) {
         drawer.drawLineBresenham(x0, (int) y0, x1, (int) y1, color);
-      } else if (hasBorderBetween(y0, y1) && Double.isFinite(y0) && Double.isFinite(y1)) {
+      } else if (hasBorderBetween(y0, y1)
+          && Double.isFinite(y0)
+          && Double.isFinite(y1)
+          && !Double.isNaN(y0)
+          && !Double.isNaN(y1)) {
         drawer.drawLineBresenham(
             x0,
             this.roundYCoordinateToScreen(y0),
