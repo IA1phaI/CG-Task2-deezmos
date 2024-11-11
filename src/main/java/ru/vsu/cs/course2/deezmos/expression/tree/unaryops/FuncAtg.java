@@ -10,6 +10,6 @@ public class FuncAtg implements Evaluator {
 
   @Override
   public double evaluate(ETNode left, ETNode right) {
-    return 1 / Math.atan(left.evaluate());
+    return Math.atan(left.evaluate());
   }
 }
