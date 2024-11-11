@@ -10,6 +10,11 @@ public class FuncDivide implements Evaluator {
 
   @Override
   public double evaluate(ETNode left, ETNode right) {
-    return left.evaluate() / right.evaluate();
+    double divider = right.evaluate();
+    if (Math.abs(divider) < 0.05) {
+      divider = 0;
+    }
+
+    return left.evaluate() / divider;
   }
 }

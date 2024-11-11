@@ -10,6 +10,10 @@ public class FuncLg implements Evaluator {
 
   @Override
   public double evaluate(ETNode left, ETNode right) {
-    return Math.log10(left.evaluate());
+    double argument = left.evaluate();
+    if (Math.abs(argument) < 0.01) {
+      argument = 0;
+    }
+    return Math.log10(argument);
   }
 }
